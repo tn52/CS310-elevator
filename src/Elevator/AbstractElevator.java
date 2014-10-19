@@ -1,3 +1,4 @@
+package Elevator;
 
 public abstract class AbstractElevator {
 
@@ -16,7 +17,7 @@ public abstract class AbstractElevator {
 	}
 
 	/**
-	 * Elevator control inferface: invoked by Elevator thread.
+	 * Elevator.Elevator control inferface: invoked by Elevator.Elevator thread.
  	 */
 
 	/* Signal incoming and outgoing riders */
@@ -33,7 +34,7 @@ public abstract class AbstractElevator {
 
 
 	/**
-	 * Elevator rider interface (part 1): invoked by rider threads. 
+	 * Elevator.Elevator rider interface (part 1): invoked by rider threads.
   	 */
 
 	/* Enter the elevator */

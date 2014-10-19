@@ -1,3 +1,4 @@
+package Elevator;
 
 public abstract class AbstractBuilding {
 
@@ -15,7 +16,7 @@ public abstract class AbstractBuilding {
 	}
 
 	/**
-	 * Elevator rider interface (part 2): invoked by rider threads.
+	 * Elevator.Elevator rider interface (part 2): invoked by rider threads.
  	 */
 
     /**

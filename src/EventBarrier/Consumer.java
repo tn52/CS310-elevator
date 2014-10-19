@@ -1,3 +1,4 @@
+package EventBarrier;
 
 public class Consumer implements Runnable{
 
@@ -12,9 +13,9 @@ public class Consumer implements Runnable{
 		// TODO Auto-generated method stub
 		while(true){
 			eventBarrier.arrive();
-			System.out.println("Consumer has arrived...");
+			System.out.println("EventBarrier.Consumer has arrived...");
 			eventBarrier.complete();
-			System.out.println("Consumer has completed...");
+			System.out.println("EventBarrier.Consumer has completed...");
 		}
 		
 	}

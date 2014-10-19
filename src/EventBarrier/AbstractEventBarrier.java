@@ -1,8 +1,9 @@
+package EventBarrier;
 
 public abstract class AbstractEventBarrier {
     
     /**
-     * Instantiate the stateless AbstractEventBarrier.
+     * Instantiate the stateless EventBarrier.EventBarrier.AbstractEventBarrier.
      */
 	public AbstractEventBarrier() {
 	}
@@ -15,7 +16,7 @@ public abstract class AbstractEventBarrier {
 
 	/**
 	 * Signal the event and block until all threads that wait for this
- 	 * event have responded. The EventBarrier returns to an unsignaled state
+ 	 * event have responded. The EventBarrier.EventBarrier returns to an unsignaled state
  	 * before raise() returns.
  	 */	
 	public abstract void raise();

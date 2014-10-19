@@ -1,5 +1,6 @@
+package EventBarrier;
 
-public class EventBarrier extends AbstractEventBarrier{
+public class EventBarrier extends AbstractEventBarrier {
 
 	public int numWaiters;
 	public boolean eventSignaled;

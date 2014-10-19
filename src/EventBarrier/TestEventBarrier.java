@@ -1,3 +1,4 @@
+package EventBarrier;
 
 public class TestEventBarrier {
 	

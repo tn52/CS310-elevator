@@ -1,3 +1,4 @@
+package Elevator;
 
 public class ElevatorController extends AbstractElevator{
 
@@ -8,7 +9,7 @@ public class ElevatorController extends AbstractElevator{
 	}
 
 	
-	//Called by Elevator Threads
+	//Called by Elevator.Elevator Threads
 	@Override
 	public void OpenDoors() {
 		// TODO Auto-generated method stub
@@ -28,7 +29,7 @@ public class ElevatorController extends AbstractElevator{
 	}
 
 	
-	//Called by Rider Threads
+	//Called by Elevator.Rider Threads
 	@Override
 	public boolean Enter() {
 		// TODO Auto-generated method stub

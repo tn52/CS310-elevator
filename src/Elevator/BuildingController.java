@@ -1,3 +1,4 @@
+package Elevator;
 
 public class BuildingController extends AbstractBuilding {
 
@@ -7,7 +8,7 @@ public class BuildingController extends AbstractBuilding {
 	}
 
 	
-	//Called by Rider Threads
+	//Called by Elevator.Rider Threads
 	@Override
 	public AbstractElevator CallUp(int fromFloor) {
 		// TODO Auto-generated method stub
