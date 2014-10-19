@@ -1,9 +1,9 @@
 package Elevator;
 
-public class ElevatorController extends AbstractElevator{
+public class ElevatorControl extends AbstractElevator{
 
-	public ElevatorController(int numFloors, int elevatorId,
-			int maxOccupancyThreshold) {
+	public ElevatorControl(int numFloors, int elevatorId,
+                           int maxOccupancyThreshold) {
 		super(numFloors, elevatorId, maxOccupancyThreshold);
 		// TODO Auto-generated constructor stub
 	}

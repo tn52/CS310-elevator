@@ -1,8 +1,8 @@
 package Elevator;
 
-public class BuildingController extends AbstractBuilding {
+public class BuildingControl extends AbstractBuilding {
 
-	public BuildingController(int numFloors, int numElevators) {
+	public BuildingControl(int numFloors, int numElevators) {
 		super(numFloors, numElevators);
 		// TODO Auto-generated constructor stub
 	}
