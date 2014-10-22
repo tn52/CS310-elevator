@@ -68,8 +68,8 @@ public class EventBarrier extends AbstractEventBarrier {
 				e.printStackTrace();
 			}
 		}
-		notifyAll(); //necessary? 
 		System.out.println("All threads completed");
+		notifyAll(); //necessary? 
 	}
 
 	@Override

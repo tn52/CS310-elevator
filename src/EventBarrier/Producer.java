@@ -13,7 +13,7 @@ public class Producer implements Runnable{
 		// TODO Auto-generated method stub
 		while(true){
 			eventBarrier.raise();
-			//System.out.println("EventBarrier.Producer has raised...");
+			System.out.println("EventBarrier.Producer has raised...");
 		}
 		
 	}
