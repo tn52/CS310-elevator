@@ -11,10 +11,10 @@ public class Producer implements Runnable{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		while(true){
+		//while(true){
 			eventBarrier.raise();
-			System.out.println("EventBarrier.Producer has raised...");
-		}
+			//System.out.println("EventBarrier.Producer has raised...");
+		//}
 		
 	}
 

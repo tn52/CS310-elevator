@@ -13,12 +13,12 @@ public class Consumer implements Runnable{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		while(true){
+		//while(true){
 			eventBarrier.arrive();
-			System.out.println("EventBarrier.Consumer has arrived...");
+			//System.out.println("EventBarrier.Consumer has arrived...");
 			eventBarrier.complete();
-			System.out.println("EventBarrier.Consumer has completed...");
-		}
+			//System.out.println("EventBarrier.Consumer has completed...");
+		//}
 		
 	}
 
