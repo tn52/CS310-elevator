@@ -2,10 +2,13 @@ package Elevator;
 
 public class ElevatorControl extends AbstractElevator{
 
+	protected int currentFloor;
+	
 	public ElevatorControl(int numFloors, int elevatorId,
                            int maxOccupancyThreshold) {
 		super(numFloors, elevatorId, maxOccupancyThreshold);
 		// TODO Auto-generated constructor stub
+		currentFloor = 1;
 	}
 
 	
