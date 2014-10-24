@@ -20,14 +20,14 @@ public class Elevator implements Runnable{
 //		while(elevatorControl.currentFloor != ){
 //		elevatorControl.VisitFloor();
 //	}		
-		elevatorControl.VisitFloor(floor);
-		elevatorControl.OpenDoors();
-		elevatorControl.ClosedDoors();
-//		while(){
-//			elevatorControl.VisitFloor();
-//		}
-		elevatorControl.OpenDoors();
-		elevatorControl.ClosedDoors();
+//		elevatorControl.VisitFloor(floor);
+//		elevatorControl.OpenDoors();
+//		elevatorControl.ClosedDoors();
+////		while(){
+////			elevatorControl.VisitFloor();
+////		}
+//		elevatorControl.OpenDoors();
+//		elevatorControl.ClosedDoors();
 	}
 
 }

@@ -24,7 +24,7 @@ public class BuildingControl extends AbstractBuilding {
 //		}
 	}
 
-	
+
 	//Called by Elevator.Rider Threads
 	@Override
 	public synchronized AbstractElevator CallUp(int fromFloor, int riderID) {
@@ -65,5 +65,16 @@ public class BuildingControl extends AbstractBuilding {
 		return temp;			//choose an available elevator from list and return
 		
 	}
+	
+	
+	public int getNumElevators() {
+		return numElevators;
+	}
+
+
+	public ArrayList<ElevatorControl> getEcList() {
+		return ecList;
+	}
+
 
 }
