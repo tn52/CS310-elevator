@@ -20,10 +20,10 @@ public class TestElevator {
 		
 		Scanner in = new Scanner(System.in);
 		
-		numFloors = 3;				//change back to nextInt
-		numElevators = 1;
-		numRiders = 1;
-		maxCapacity = 10;
+		numFloors = in.nextInt();				//change back to nextInt
+		numElevators = in.nextInt();
+		numRiders = in.nextInt();
+		maxCapacity = in.nextInt();
 
 		
 		BuildingControl bc = new BuildingControl(numFloors, numElevators, ecList);
@@ -34,7 +34,7 @@ public class TestElevator {
 		}
 		
 		for(int i=0; i<numRiders; i++){
-			Rider r = new Rider(bc, ecList, 5, 1, 3);			//change back to nextInt
+			Rider r = new Rider(bc, ecList, in.nextInt(), in.nextInt(), in.nextInt());			//change back to nextInt
 			riderList.add(r);
 			Thread t = new Thread(r);
 			t.start();
