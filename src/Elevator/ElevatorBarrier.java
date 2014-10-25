@@ -6,9 +6,11 @@ public class ElevatorBarrier extends AbstractEventBarrier {
 	public boolean eventSignaled;
 	public boolean barrierOpen;
     public int startFloor;
+    public int destFloor;
 	
-	public ElevatorBarrier(int startFloor){
+	public ElevatorBarrier(int startFloor, int destFloor){
         this.startFloor = startFloor;
+        this.destFloor = destFloor;
 		numWaiters = 0;
 		eventSignaled = false;
 		barrierOpen = false;

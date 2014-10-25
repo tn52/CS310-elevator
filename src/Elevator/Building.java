@@ -1,9 +1,17 @@
 package Elevator;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Building extends AbstractBuilding {
 	
 	private int numFloors;
 	private int numElevators;
+	
+	
+	private Set<ElevatorBarrier> upBarriers = new HashSet<ElevatorBarrier>();
+	private Set<ElevatorBarrier> downBarriers = new HashSet<ElevatorBarrier>();
+	private Set<ElevatorBarrier> onBarriers = new HashSet<ElevatorBarrier>();
 
     public Building(int numFloors, int numElevators) {
         super(numFloors, numElevators);

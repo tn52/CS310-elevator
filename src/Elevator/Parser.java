@@ -56,7 +56,7 @@ public class Parser {
 			int startFloor = input.nextInt();
 			int destFloor = input.nextInt();
 			
-			ElevatorBarrier eb = new ElevatorBarrier(startFloor);
+			ElevatorBarrier eb = new ElevatorBarrier(startFloor, destFloor);
 			
 			Rider r = new Rider(bc, eb, riderID, startFloor, destFloor);
 			riderList.add(r);
