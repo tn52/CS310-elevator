@@ -82,11 +82,7 @@ public class ElevatorBarrier extends AbstractEventBarrier {
 		return numWaiters;
 	}
 
-    public int getStartFloor() {
-        return startFloor;
-    }
-
-    public void setStartFloor(int startFloor) {
-        this.startFloor = startFloor;
+    public int getDestFloor() {
+        return destFloor;
     }
 }

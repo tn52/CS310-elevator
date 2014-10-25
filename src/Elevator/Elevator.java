@@ -1,12 +1,17 @@
 package Elevator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Elevator extends AbstractElevator implements Runnable{
 
     protected int numFloors;
     protected int elevatorId;
     protected int currentfloor;
+    protected List<ElevatorBarrier> ebList;
     private int maxOccupancy;
     private int peopleinElevator;
+
 
     /**
      * Other variables/data structures as needed goes here
@@ -21,7 +26,12 @@ public class Elevator extends AbstractElevator implements Runnable{
         this.elevatorId = elevatorId;
         this.maxOccupancy = maxOccupancyThreshold;
         this.peopleinElevator = 0;
-        currentfloor = -1;
+        this.currentfloor = -1;
+        this.ebList = new ArrayList<ElevatorBarrier>();
+    }
+
+    public List<ElevatorBarrier> getEbList() {
+        return ebList;
     }
 
     @Override
