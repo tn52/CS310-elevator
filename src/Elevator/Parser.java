@@ -3,8 +3,6 @@ package Elevator;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
 import java.util.Scanner;
 
 public class Parser {
@@ -16,9 +14,12 @@ public class Parser {
 
     public static ElevatorControl ec;
     public static Building bc;
+   
 
     protected ArrayList<Elevator> mElevatorList;
 	protected ArrayList<Rider> riderList;
+	private Scanner input;
+	private Scanner lineScanner;
 
 	
 	public Parser(){
@@ -32,7 +33,7 @@ public class Parser {
 	
 	public void parse(String filename) throws FileNotFoundException{
 
-		Scanner input = new Scanner(new FileReader(filename));
+		input = new Scanner(new FileReader(filename));
 		
 		numFloors = input.nextInt();
 		numElevators = input.nextInt();
@@ -50,7 +51,14 @@ public class Parser {
 		/* Benson: Replaced number of riders with number of requests.
 		 * There can be fewer request than the number of riders */
 		for(int i = 0; i < findNumLines(filename); i++){
-			Rider r = new Rider(bc, input.nextInt(), input.nextInt(), input.nextInt());
+			
+			int riderID = input.nextInt();
+			int startFloor = input.nextInt();
+			int destFloor = input.nextInt();
+			
+			ElevatorBarrier eb = new ElevatorBarrier(startFloor);
+			
+			Rider r = new Rider(bc, eb, riderID, startFloor, destFloor);
 			riderList.add(r);
 			Thread t = new Thread(r);
 			t.start();
@@ -67,7 +75,7 @@ public class Parser {
 	}
 	
 	private int findNumLines(String filename) throws FileNotFoundException{
-		Scanner lineScanner = new Scanner(new FileReader(filename));
+		lineScanner = new Scanner(new FileReader(filename));
 		/* Benson: lineCounter starts at -1 because we aren't considering first line in text file */
 		int lineCounter = -1;
 		while(lineScanner.hasNextLine()){
