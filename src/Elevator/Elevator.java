@@ -4,6 +4,7 @@ public class Elevator extends AbstractElevator implements Runnable{
 
     protected int numFloors;
     protected int elevatorId;
+    protected int currentfloor;
     private int maxOccupancy;
     private int peopleinElevator;
 
@@ -20,6 +21,7 @@ public class Elevator extends AbstractElevator implements Runnable{
         this.elevatorId = elevatorId;
         this.maxOccupancy = maxOccupancyThreshold;
         this.peopleinElevator = 0;
+        currentfloor = -1;
     }
 
     @Override
@@ -63,7 +65,7 @@ public class Elevator extends AbstractElevator implements Runnable{
 
     @Override
     public void VisitFloor(int floor) {
-
+        currentfloor = floor;
     }
 
     @Override
