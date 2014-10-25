@@ -10,7 +10,7 @@ public class Rider implements Runnable{
 	protected int currentFloor;
 	protected BuildingControl buildingControl;
 	protected Queue<ElevatorControl> elevatorControlQueue;
-	protected ElevatorControl assignedElevatorControl;
+	protected ElevatorControl assignedElevator;
 	protected boolean riderInElevator;
 	
 	public Rider(BuildingControl bc, Queue<ElevatorControl> ec, int id, int source, int dest){
@@ -24,18 +24,17 @@ public class Rider implements Runnable{
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		
 		//Rider starts by EITHER calling up or down 
-		if(sourceFloor<destFloor){
-			assignedElevatorControl = (ElevatorControl) buildingControl.CallUp(sourceFloor, riderID);
-		}else{
-			assignedElevatorControl = (ElevatorControl) buildingControl.CallDown(sourceFloor, riderID);
+		if(sourceFloor<destFloor) {
+            assignedElevator = (ElevatorControl) buildingControl.CallUp(sourceFloor, riderID);
+        } else{
+			assignedElevator = (ElevatorControl) buildingControl.CallDown(sourceFloor, riderID);
 		}
 		
-		riderInElevator = assignedElevatorControl.Enter();
-		assignedElevatorControl.RequestFloor(destFloor);
-		assignedElevatorControl.Exit();
+		riderInElevator = assignedElevator.Enter();
+		assignedElevator.RequestFloor(destFloor);
+		assignedElevator.Exit();
 		
 		
 		

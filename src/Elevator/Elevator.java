@@ -1,11 +1,8 @@
 package Elevator;
 
-import java.util.ArrayList;
-
 public class Elevator implements Runnable{
 
 	protected int elevatorID;
-	//protected ArrayList<ElevatorControl> elevatorControlList;
 	protected ElevatorControl elevatorControl;
 	
 	public Elevator(ElevatorControl ec, int id){
@@ -15,7 +12,6 @@ public class Elevator implements Runnable{
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 
 //		while(elevatorControl.currentFloor != ){
 //		elevatorControl.VisitFloor();
