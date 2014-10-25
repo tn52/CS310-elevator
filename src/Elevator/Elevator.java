@@ -5,14 +5,15 @@ public class Elevator implements Runnable{
 	protected int elevatorID;
 	protected ElevatorControl elevatorControl;
 	
-	public Elevator(ElevatorControl ec, int id){
-		elevatorID = id;
+	public Elevator(ElevatorControl ec){
+		elevatorID = ec.elevatorId;
 		elevatorControl = ec;
 	}
 	
 	@Override
 	public void run() {
 
+        // is elevator going up or down?
 //        while(elevatorControl.currentFloor!=)
 //		while(elevatorControl.currentFloor != ){
 //		elevatorControl.VisitFloor();

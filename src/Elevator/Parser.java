@@ -12,22 +12,20 @@ public class Parser {
 	protected int numElevators;
 	protected int numRiders;
 	protected int maxCapacity;
-	
-	protected int elevatorID = 1;
+    public static FloorData fd;
 	
 	protected Queue<ElevatorControl> ecQueue;
-	protected ArrayList<ElevatorControl> ecList;
 	protected ArrayList<Rider> riderList;
 	private Scanner input;
 	private Scanner lineScanner;
 	
 	public Parser(){
-		ecList = new ArrayList<ElevatorControl>();
 		riderList = new ArrayList<Rider>();
+        fd = new FloorData();
 	}
 	
 	public void parse(String filename) throws FileNotFoundException{
-		
+
 		input = new Scanner(new FileReader(filename));
 		
 		numFloors = input.nextInt();
@@ -54,16 +52,12 @@ public class Parser {
 		
 		for(int i = 0; i < numElevators; i++){
             if (ecQueue!=null) {
-                Elevator e = new Elevator(ecQueue.poll(), i);
+                Elevator e = new Elevator(ecQueue.poll());
                 Thread t = new Thread(e);
                 t.start();
             }
 		}
 
-	}
-
-	public ArrayList<ElevatorControl> getEcList() {
-		return ecList;
 	}
 
 	public ArrayList<Rider> getRiderList() {
@@ -76,7 +70,7 @@ public class Parser {
 		System.out.println("Number of Floors: " + numFloors);
 		System.out.println("Number of Riders: " + numRiders);
 		for(Rider r : riderList){
-			System.out.println("Rider " + r.riderID + ": " + "Starts from floor " + r.sourceFloor + " And ends at floor " + r.destFloor);
+			System.out.println("Rider " + r.riderID + ": " + "Starts from floor " + r.startFloor + " And ends at floor " + r.destFloor);
 		}
 	}
 	

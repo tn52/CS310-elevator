@@ -1,14 +1,12 @@
 package Elevator;
 
-import java.util.TreeSet;
-
 public class ElevatorControl extends AbstractElevator{
 
 	protected int currentFloor;
-    protected int peopleInElevator;
-    protected int maxOccupants;
-    protected TreeSet<Integer> ascendingFloorList;
-    protected TreeSet<Integer> descendingFloorList;
+    private int peopleInElevator;
+    private int maxOccupants;
+    private boolean isTravelingUp;
+    protected boolean isDoorOpen;
 	
 	public ElevatorControl(int numFloors, int elevatorId,
                            int maxOccupancyThreshold) {
@@ -16,27 +14,31 @@ public class ElevatorControl extends AbstractElevator{
 		currentFloor = 1;
         maxOccupants = maxOccupancyThreshold;
         peopleInElevator = 0;
-
 	}
 
 	
 	//Called by Elevator.Elevator Threads
 	@Override
 	public void OpenDoors() {
-
+    isDoorOpen = true;
 		
 	}
 
 	@Override
 	public void ClosedDoors() {
-
+    isDoorOpen = false;
 		
 	}
 
 	@Override
 	public void VisitFloor(int floor) {
-		currentFloor = floor;
-	}
+        if (isTravelingUp) {
+            Parser.fd.ascendingFloorList.remove(floor);
+        } else {
+            Parser.fd.descendingFloorList.remove(floor);
+        }
+        currentFloor = floor;
+    }
 
     //Called by Elevator.Rider Threads
 	public boolean Enter(int riderId) {
@@ -57,15 +59,19 @@ public class ElevatorControl extends AbstractElevator{
 	}
 
 	public void RequestFloor(int floor, int riderId, boolean floorUp) {
-        System.out.println("Floor "+floor+"requested by rider " + riderId);
-        if (floorUp) {
-            ascendingFloorList.add(floor);
+        System.out.println("Floor " + floor + "requested by rider " + riderId);
+        isTravelingUp = floorUp;
+        if (isTravelingUp) {
+            Parser.fd.ascendingFloorList.add(floor);
         } else {
-            descendingFloorList.add(floor);
+            Parser.fd.descendingFloorList.add(floor);
         }
 
     }
 
+    /**
+     * Original methods from abstract class. Signatures were changed for implementation, as seen in code above.
+     * */
     @Override
     public boolean Enter() {
         return false;
