@@ -3,6 +3,7 @@ package Elevator;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class Parser {
@@ -14,13 +15,14 @@ public class Parser {
 	
 	protected int elevatorID = 1;
 	
+	protected Queue<ElevatorControl> ecQueue;
 	protected ArrayList<ElevatorControl> ecList;
 	protected ArrayList<Rider> riderList;
 	private Scanner input;
 	private Scanner lineScanner;
 	
 	public Parser(){
-		ecList =  new ArrayList<ElevatorControl>();
+		ecList = new ArrayList<ElevatorControl>();
 		riderList = new ArrayList<Rider>();
 	}
 	
@@ -33,24 +35,27 @@ public class Parser {
 		numRiders = input.nextInt();
 		maxCapacity = input.nextInt();
 
-		
-		BuildingControl bc = new BuildingControl(numFloors, numElevators, ecList);
-		
+
 		for(int i = 0; i < numElevators; i++){
 			ElevatorControl ec = new ElevatorControl(numFloors, i+1, maxCapacity);
-			ecList.add(ec);	
-			
-			Elevator e = new Elevator(ecList.get(i), i);
-			Thread t = new Thread(e);
-			t.start();	
+			ecQueue.add(ec);	
 		}
+		
+		BuildingControl bc = new BuildingControl(numFloors, numElevators, ecQueue);
+		
 		/* Benson: Replaced number of riders with number of requests.
 		 * There can be fewer request than the number of riders */
 		for(int i = 0; i < findNumLines(filename); i++){
-			Rider r = new Rider(bc, ecList, input.nextInt(), input.nextInt(), input.nextInt());
+			Rider r = new Rider(bc, ecQueue, input.nextInt(), input.nextInt(), input.nextInt());
 			riderList.add(r);
 			Thread t = new Thread(r);
 			t.start();
+		}
+		
+		for(int i = 0; i < numElevators; i++){
+			Elevator e = new Elevator(ecList.get(i), i);
+			Thread t = new Thread(e);
+			t.start();		
 		}
 
 	}

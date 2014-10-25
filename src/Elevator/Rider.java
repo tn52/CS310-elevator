@@ -1,6 +1,6 @@
 package Elevator;
 
-import java.util.ArrayList;
+import java.util.Queue;
 
 public class Rider implements Runnable{
 
@@ -9,13 +9,13 @@ public class Rider implements Runnable{
 	protected int destFloor;
 	protected int currentFloor;
 	protected BuildingControl buildingControl;
-	protected ArrayList<ElevatorControl> elevatorControlList;
+	protected Queue<ElevatorControl> elevatorControlQueue;
 	protected ElevatorControl assignedElevatorControl;
 	protected boolean riderInElevator;
 	
-	public Rider(BuildingControl bc, ArrayList<ElevatorControl> ec, int id, int source, int dest){
+	public Rider(BuildingControl bc, Queue<ElevatorControl> ec, int id, int source, int dest){
 		buildingControl = bc;
-		elevatorControlList = ec;
+		elevatorControlQueue = ec;
 		riderID = id;
 		sourceFloor = source;
 		destFloor = dest;		
