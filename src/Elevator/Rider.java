@@ -1,40 +1,36 @@
 package Elevator;
 
-import java.util.Queue;
-
 public class Rider implements Runnable{
 
 	protected int riderID;
 	protected int startFloor;
 	protected int destFloor;
 	protected int currentFloor;
-	protected BuildingControl bc;
-	protected Queue<ElevatorControl> ecQueue;
-	protected ElevatorControl assignedElevator;
+	protected Building bc;
+	protected Elevator elevator;
 	protected boolean isRiderIn;
 	
-	public Rider(BuildingControl bc, Queue<ElevatorControl> ec, int id, int source, int dest){
+	public Rider(Building bc, int id, int start, int dest){
 		this.bc = bc;
-		ecQueue = ec;
-		riderID = id;
-		startFloor = source;
-		destFloor = dest;		
-		currentFloor = startFloor;
+		this.riderID = id;
+		this.startFloor = start;
+		this.destFloor = dest;
+		this.currentFloor = startFloor;
 	}
 	
 	@Override
 	public void run() {
 		boolean isGoingUp = startFloor < destFloor;
-		//Rider starts by EITHER calling up or down 
+
 		if(isGoingUp) {
-            assignedElevator = (ElevatorControl) bc.CallUp(startFloor, riderID);
+            elevator = (Elevator) bc.CallUp(startFloor, riderID);
         } else{
-			assignedElevator = (ElevatorControl) bc.CallDown(startFloor, riderID);
+			elevator = (Elevator) bc.CallDown(startFloor, riderID);
 		}
 
-        if (isRiderIn = assignedElevator.Enter(riderID)) {
-            assignedElevator.RequestFloor(destFloor, riderID, isGoingUp);
-            assignedElevator.Exit();
+        if (isRiderIn = elevator.Enter(riderID)) {
+            elevator.RequestFloor(destFloor, riderID, isGoingUp);
+            elevator.Exit();
         }
 		
 		
