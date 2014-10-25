@@ -23,15 +23,23 @@ public class Rider implements Runnable{
 		boolean isGoingUp = startFloor < destFloor;
 
 		if(isGoingUp) {
-            elevator = (Elevator) bc.CallUp(startFloor, riderID);
+            elevator = (Elevator) bc.CallUp(startFloor, riderID, eb);
+            eb.arrive();
+            
+            if (isRiderIn = elevator.Enter(riderID)) {
+                elevator.RequestFloor(destFloor, riderID, isGoingUp);
+                elevator.Exit();
+            }
         } else{
-			elevator = (Elevator) bc.CallDown(startFloor, riderID);
+			elevator = (Elevator) bc.CallDown(startFloor, riderID, eb);
+			eb.arrive();
+			
+	        if (isRiderIn = elevator.Enter(riderID)) {
+	            elevator.RequestFloor(destFloor, riderID, isGoingUp);
+	            elevator.Exit();
+	        }
 		}
 
-        if (isRiderIn = elevator.Enter(riderID)) {
-            elevator.RequestFloor(destFloor, riderID, isGoingUp);
-            elevator.Exit();
-        }
 		
 		
 	}
