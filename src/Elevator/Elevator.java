@@ -2,13 +2,10 @@ package Elevator;
 
 public class Elevator extends AbstractElevator implements Runnable{
 
-	protected int elevatorID;
-	protected ElevatorControl ec;
-	
-//	public Elevator(ElevatorControl elevatorControl){
-//		elevatorID = elevatorControl.elevatorId;
-//		ec = elevatorControl;
-//	}
+    protected int numFloors;
+    protected int elevatorId;
+    private int maxOccupancy;
+    private int peopleinElevator;
 
     /**
      * Other variables/data structures as needed goes here
@@ -19,6 +16,10 @@ public class Elevator extends AbstractElevator implements Runnable{
      */
     public Elevator(int numFloors, int elevatorId, int maxOccupancyThreshold) {
         super(numFloors, elevatorId, maxOccupancyThreshold);
+        this.numFloors = numFloors;
+        this.elevatorId = elevatorId;
+        this.maxOccupancy = maxOccupancyThreshold;
+        this.peopleinElevator = 0;
     }
 
     @Override
@@ -67,12 +68,17 @@ public class Elevator extends AbstractElevator implements Runnable{
 
     @Override
     public boolean Enter(int riderId) {
-        return false;
+        if (peopleinElevator < maxOccupancy) {
+            peopleinElevator++;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public void Exit() {
-
+        peopleinElevator--;
     }
 
     @Override
