@@ -21,7 +21,7 @@ public class Elevator implements Runnable{
 
         ec.OpenDoors();
         ec.ClosedDoors();
-        
+
         // is elevator going up or down?
 //        while(ec.currentFloor!=)
 //		while(ec.currentFloor != ){

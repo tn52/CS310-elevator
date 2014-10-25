@@ -32,7 +32,6 @@ public class Rider implements Runnable{
 			assignedElevator = (ElevatorControl) bc.CallDown(startFloor, riderID);
 		}
 
-        assignedElevator.currentFloor = startFloor;
         if (isRiderIn = assignedElevator.Enter(riderID)) {
             assignedElevator.RequestFloor(destFloor, riderID, isGoingUp);
             assignedElevator.Exit();
