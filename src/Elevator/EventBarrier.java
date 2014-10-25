@@ -5,8 +5,10 @@ public class EventBarrier extends AbstractEventBarrier {
 	public int numWaiters;
 	public boolean eventSignaled;
 	public boolean barrierOpen;
+    public int startFloor;
 	
-	public EventBarrier(){
+	public EventBarrier(int startFloor){
+        this.startFloor = startFloor;
 		numWaiters = 0;
 		eventSignaled = false;
 		barrierOpen = false;
@@ -77,6 +79,12 @@ public class EventBarrier extends AbstractEventBarrier {
 		// TODO Auto-generated method stub
 		return numWaiters;
 	}
-	
 
+    public int getStartFloor() {
+        return startFloor;
+    }
+
+    public void setStartFloor(int startFloor) {
+        this.startFloor = startFloor;
+    }
 }
