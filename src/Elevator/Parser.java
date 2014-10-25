@@ -40,7 +40,7 @@ public class Parser {
 			ElevatorControl ec = new ElevatorControl(numFloors, i+1, maxCapacity);
 			ecQueue.add(ec);	
 		}
-		
+
 		BuildingControl bc = new BuildingControl(numFloors, numElevators, ecQueue);
 		
 		/* Benson: Replaced number of riders with number of requests.
@@ -53,9 +53,11 @@ public class Parser {
 		}
 		
 		for(int i = 0; i < numElevators; i++){
-			Elevator e = new Elevator(ecList.get(i), i);
-			Thread t = new Thread(e);
-			t.start();		
+            if (ecQueue!=null) {
+                Elevator e = new Elevator(ecQueue.poll(), i);
+                Thread t = new Thread(e);
+                t.start();
+            }
 		}
 
 	}

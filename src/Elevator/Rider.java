@@ -24,16 +24,16 @@ public class Rider implements Runnable{
 	
 	@Override
 	public void run() {
-		
+		boolean isGoingUp = sourceFloor < destFloor;
 		//Rider starts by EITHER calling up or down 
-		if(sourceFloor<destFloor) {
+		if(isGoingUp) {
             assignedElevator = (ElevatorControl) buildingControl.CallUp(sourceFloor, riderID);
         } else{
 			assignedElevator = (ElevatorControl) buildingControl.CallDown(sourceFloor, riderID);
 		}
-		
-		riderInElevator = assignedElevator.Enter();
-		assignedElevator.RequestFloor(destFloor);
+
+		riderInElevator = assignedElevator.Enter(riderID);
+		assignedElevator.RequestFloor(destFloor, riderID, isGoingUp);
 		assignedElevator.Exit();
 		
 		

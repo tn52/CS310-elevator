@@ -13,6 +13,7 @@ public class Elevator implements Runnable{
 	@Override
 	public void run() {
 
+//        while(elevatorControl.currentFloor!=)
 //		while(elevatorControl.currentFloor != ){
 //		elevatorControl.VisitFloor();
 //	}		
