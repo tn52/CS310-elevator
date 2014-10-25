@@ -34,6 +34,14 @@ public class Building extends AbstractBuilding {
     public int getNumElevators() {
 		return numElevators;
 	}
+    
+    public void removeDownBarrier(ElevatorBarrier eb){
+    	downBarriers.remove(eb);
+    }
+    
+    public void removeUpBarrier(ElevatorBarrier eb){
+    	upBarriers.remove(eb);
+    }
 
 	@Override
 	public AbstractElevator CallUp(int fromFloor, int riderID) {

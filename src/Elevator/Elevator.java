@@ -33,6 +33,11 @@ public class Elevator extends AbstractElevator implements Runnable{
     public List<ElevatorBarrier> getEbList() {
         return ebList;
     }
+    
+    public void addElevatorBarrier(ElevatorBarrier eb){
+    	ebList.add(eb);
+    }
+
 
     @Override
 	public void run() {

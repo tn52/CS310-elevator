@@ -27,6 +27,10 @@ public class Rider implements Runnable{
             eb.arrive();
             
             if (isRiderIn = elevator.Enter(riderID)) {
+            	
+            	bc.removeUpBarrier(eb);
+            	
+            	elevator.addElevatorBarrier(eb);
                 elevator.RequestFloor(destFloor, riderID, isGoingUp);
                 elevator.Exit();
             }
@@ -35,6 +39,10 @@ public class Rider implements Runnable{
 			eb.arrive();
 			
 	        if (isRiderIn = elevator.Enter(riderID)) {
+	        	
+            	bc.removeDownBarrier(eb);
+            	
+            	elevator.addElevatorBarrier(eb);
 	            elevator.RequestFloor(destFloor, riderID, isGoingUp);
 	            elevator.Exit();
 	        }
