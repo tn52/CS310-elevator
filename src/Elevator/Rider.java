@@ -8,9 +8,11 @@ public class Rider implements Runnable{
 	protected Building bc;
 	protected Elevator elevator;
 	protected boolean isRiderIn;
+	protected EventBarrier eb;
 	
-	public Rider(Building bc, int id, int start, int dest){
+	public Rider(Building bc, EventBarrier eb, int id, int start, int dest){
 		this.bc = bc;
+		this.eb = eb;
 		this.riderID = id;
 		this.startFloor = start;
 		this.destFloor = dest;
