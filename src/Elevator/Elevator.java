@@ -18,11 +18,13 @@ public class Elevator implements Runnable{
 //	}		
 //		elevatorControl.VisitFloor(floor);
 //		elevatorControl.OpenDoors();
+        // rider enters, and requests a floor
 //		elevatorControl.ClosedDoors();
 ////		while(){
 ////			elevatorControl.VisitFloor();
 ////		}
 //		elevatorControl.OpenDoors();
+        // rider exits, and other riders (if they exist) may enter elevator
 //		elevatorControl.ClosedDoors();
 	}
 

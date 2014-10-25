@@ -2,7 +2,7 @@ package Elevator;
 
 import java.io.FileNotFoundException;
 
-public class Test {
+public class TestElevator {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		
