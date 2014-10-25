@@ -5,7 +5,6 @@ public class Rider implements Runnable{
 	protected int riderID;
 	protected int startFloor;
 	protected int destFloor;
-	protected int currentFloor;
 	protected Building bc;
 	protected Elevator elevator;
 	protected boolean isRiderIn;
@@ -15,7 +14,6 @@ public class Rider implements Runnable{
 		this.riderID = id;
 		this.startFloor = start;
 		this.destFloor = dest;
-		this.currentFloor = startFloor;
 	}
 	
 	@Override
