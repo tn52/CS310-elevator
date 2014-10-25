@@ -3,31 +3,40 @@ package Elevator;
 public class Elevator implements Runnable{
 
 	protected int elevatorID;
-	protected ElevatorControl elevatorControl;
+	protected ElevatorControl ec;
 	
-	public Elevator(ElevatorControl ec){
-		elevatorID = ec.elevatorId;
-		elevatorControl = ec;
+	public Elevator(ElevatorControl elevatorControl){
+		elevatorID = elevatorControl.elevatorId;
+		ec = elevatorControl;
 	}
 	
 	@Override
 	public void run() {
 
+        if (ec.isTravelingUp) {
+            ec.VisitFloor(Parser.fd.ascendingFloorList.first());
+        } else {
+            ec.VisitFloor(Parser.fd.descendingFloorList.first());
+        }
+
+        ec.OpenDoors();
+        ec.ClosedDoors();
+        
         // is elevator going up or down?
-//        while(elevatorControl.currentFloor!=)
-//		while(elevatorControl.currentFloor != ){
-//		elevatorControl.VisitFloor();
+//        while(ec.currentFloor!=)
+//		while(ec.currentFloor != ){
+//		ec.VisitFloor();
 //	}		
-//		elevatorControl.VisitFloor(floor);
-//		elevatorControl.OpenDoors();
+//		ec.VisitFloor(floor);
+//		ec.OpenDoors();
         // rider enters, and requests a floor
-//		elevatorControl.ClosedDoors();
+//		ec.ClosedDoors();
 ////		while(){
-////			elevatorControl.VisitFloor();
+////			ec.VisitFloor();
 ////		}
-//		elevatorControl.OpenDoors();
+//		ec.OpenDoors();
         // rider exits, and other riders (if they exist) may enter elevator
-//		elevatorControl.ClosedDoors();
-	}
+//		ec.ClosedDoors();
+    }
 
 }

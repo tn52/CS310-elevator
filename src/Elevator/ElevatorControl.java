@@ -5,7 +5,7 @@ public class ElevatorControl extends AbstractElevator{
 	protected int currentFloor;
     private int peopleInElevator;
     private int maxOccupants;
-    private boolean isTravelingUp;
+    protected boolean isTravelingUp;
     protected boolean isDoorOpen;
 	
 	public ElevatorControl(int numFloors, int elevatorId,
@@ -59,13 +59,13 @@ public class ElevatorControl extends AbstractElevator{
 	}
 
 	public void RequestFloor(int floor, int riderId, boolean floorUp) {
-        System.out.println("Floor " + floor + "requested by rider " + riderId);
-        isTravelingUp = floorUp;
-        if (isTravelingUp) {
+        System.out.println("Floor " + floor + "requested by rider " + riderId + "from floor " + currentFloor);
+        if (floorUp) {
             Parser.fd.ascendingFloorList.add(floor);
         } else {
             Parser.fd.descendingFloorList.add(floor);
         }
+        isTravelingUp = floorUp;
 
     }
 
