@@ -9,7 +9,7 @@ public class TestElevator {
 		/* Test Parser */
 		Parser parser = new Parser();
 		parser.parse("InputTest1.txt");
-		parser.testParser();
+		//parser.testParser();
 		
 	}
 
