@@ -5,12 +5,12 @@ public class ElevatorBarrier extends AbstractEventBarrier {
 	public int numWaiters;
 	public boolean eventSignaled;
 	public boolean barrierOpen;
-    public int startFloor;
-    public int destFloor;
+    public int floor;
+    public int key;
 	
-	public ElevatorBarrier(int startFloor, int destFloor){
-        this.startFloor = startFloor;
-        this.destFloor = destFloor;
+	public ElevatorBarrier(int floor, int key){
+        this.floor = floor;
+        this.key = key;				//key--> 0 = exit, 1 = going up, 2 = going down 
 		numWaiters = 0;
 		eventSignaled = false;
 		barrierOpen = false;
@@ -20,7 +20,7 @@ public class ElevatorBarrier extends AbstractEventBarrier {
 	public synchronized void arrive() {
 
 		numWaiters++;
-		System.out.println("Thread arrived, waiters: " + numWaiters);
+		//System.out.println("Thread arrived, waiters: " + numWaiters);
 		while(!eventSignaled){
 			try {
 				notifyAll();
@@ -31,7 +31,7 @@ public class ElevatorBarrier extends AbstractEventBarrier {
 			}
 		}
 		//complete();
-		System.out.println("arrive return");
+		//System.out.println("arrive return");
 		notifyAll();
 	}
 
@@ -40,7 +40,7 @@ public class ElevatorBarrier extends AbstractEventBarrier {
 
 		eventSignaled = true;
 		
-		System.out.println("Barrier raised");
+		//System.out.println("Barrier raised");
 		
 		notifyAll();
 		while(numWaiters!=0){
@@ -53,7 +53,7 @@ public class ElevatorBarrier extends AbstractEventBarrier {
 		}
 		eventSignaled = false;
 		
-		System.out.println("Barrier down");
+		//System.out.println("Barrier down");
 		notifyAll();
 		
 	}
@@ -62,7 +62,7 @@ public class ElevatorBarrier extends AbstractEventBarrier {
 	public synchronized void complete() {
 
 		numWaiters--;
-		System.out.println("Thread completed, waiters: "+ numWaiters);
+		//System.out.println("Thread completed, waiters: "+ numWaiters);
 		while(numWaiters!=0){
 			try {
 				notifyAll();
@@ -72,7 +72,7 @@ public class ElevatorBarrier extends AbstractEventBarrier {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("All threads completed");
+		//System.out.println("All threads completed");
 		notifyAll(); //necessary? 
 	}
 
@@ -83,6 +83,6 @@ public class ElevatorBarrier extends AbstractEventBarrier {
 	}
 
     public int getDestFloor() {
-        return destFloor;
+        return floor;
     }
 }

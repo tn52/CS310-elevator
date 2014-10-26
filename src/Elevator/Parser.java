@@ -16,6 +16,10 @@ public class Parser {
     public static Building bc;
    
 
+    protected ArrayList<ElevatorBarrier> elevatorBarrierListUP = new ArrayList<ElevatorBarrier>();
+    protected ArrayList<ElevatorBarrier> elevatorBarrierListDOWN = new ArrayList<ElevatorBarrier>();
+    protected ArrayList<ElevatorBarrier> elevatorBarrierListOUT = new ArrayList<ElevatorBarrier>();
+    
     protected ArrayList<Elevator> mElevatorList;
 	protected ArrayList<Rider> riderList;
 	private Scanner input;
@@ -35,20 +39,34 @@ public class Parser {
 
 		input = new Scanner(new FileReader(filename));
 		
+		//Parse F E R N
 		numFloors = input.nextInt();
 		numElevators = input.nextInt();
 		numRiders = input.nextInt();
 		maxCapacity = input.nextInt();
 
-		for(int i = 0; i < numElevators; i++){
-			Elevator elevator = new Elevator(numFloors, i+1, maxCapacity);
-            mElevatorList.add(elevator);
-		}
 
-        ec = new ElevatorControl(mElevatorList);
-        bc = new Building(numFloors, numElevators);
+		//Create 3F Elevator Barriers and put into elevator barrier list
 		
-		/* Benson: Replaced number of riders with number of requests.
+		for(int i =0; i <numFloors; i++){
+			ElevatorBarrier tempEB1 = new ElevatorBarrier(i, 0);
+			elevatorBarrierListOUT.add(tempEB1);
+			
+			ElevatorBarrier tempEB2 = new ElevatorBarrier(i, 1);
+			elevatorBarrierListUP.add(tempEB2);
+			
+			ElevatorBarrier tempEB3 = new ElevatorBarrier(i, 2);
+			elevatorBarrierListDOWN.add(tempEB3);
+			
+		}
+		
+		//Initialize elevator control and Building
+        ec = new ElevatorControl(mElevatorList);
+        bc = new Building(numFloors, numElevators, elevatorBarrierListOUT, elevatorBarrierListUP, elevatorBarrierListDOWN);
+		
+        
+		/* Create rider threads
+		 * Benson: Replaced number of riders with number of requests.
 		 * There can be fewer request than the number of riders */
 		for(int i = 0; i < findNumLines(filename); i++){
 			
@@ -56,14 +74,32 @@ public class Parser {
 			int startFloor = input.nextInt();
 			int destFloor = input.nextInt();
 			
-			ElevatorBarrier eb = new ElevatorBarrier(startFloor, destFloor);
+			//ElevatorBarrier eb = new ElevatorBarrier(startFloor, destFloor);
 			
-			Rider r = new Rider(bc, eb, riderID, startFloor, destFloor);
+			Rider r = new Rider(bc, riderID, startFloor, destFloor);
 			riderList.add(r);
+			//Thread t = new Thread(r);
+			//t.start();
+		}
+		
+		testParser();
+		
+		for (Rider r:riderList){
 			Thread t = new Thread(r);
 			t.start();
 		}
-//
+		
+		//Create E number of elevator threads and put into list, but not started 
+		for(int i = 0; i < numElevators; i++){
+			Elevator elevator = new Elevator(numFloors, i+1, maxCapacity, bc);
+            mElevatorList.add(elevator);
+            Thread t = new Thread(elevator);
+            t.start();
+		}
+		
+		
+		
+//		Create elevator threads
 //		for(int i = 0; i < numElevators; i++){
 //            if (ecQueue!=null) {
 //                Elevator e = new Elevator(ecQueue.poll());
@@ -73,6 +109,7 @@ public class Parser {
 //		}
 
 	}
+	
 	
 	private int findNumLines(String filename) throws FileNotFoundException{
 		lineScanner = new Scanner(new FileReader(filename));
@@ -93,6 +130,7 @@ public class Parser {
         for(Rider r : riderList){
             System.out.println("Rider " + r.riderID + ": " + "Starts from floor " + r.startFloor + " And ends at floor " + r.destFloor);
         }
+        System.out.println();
     }
 	
 	

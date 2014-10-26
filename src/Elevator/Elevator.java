@@ -11,8 +11,11 @@ public class Elevator extends AbstractElevator implements Runnable{
     protected List<ElevatorBarrier> ebList;
     private int maxOccupancy;
     private int peopleinElevator;
-
-
+    boolean[] stopfloorsUP;
+    boolean[] stopfloorsDOWN;
+    boolean[] stopfloorsOUT; 
+    protected Building bc;
+    
     /**
      * Other variables/data structures as needed goes here
      *
@@ -20,14 +23,19 @@ public class Elevator extends AbstractElevator implements Runnable{
      * @param elevatorId
      * @param maxOccupancyThreshold
      */
-    public Elevator(int numFloors, int elevatorId, int maxOccupancyThreshold) {
+    public Elevator(int numFloors, int elevatorId, int maxOccupancyThreshold, Building bc) {
         super(numFloors, elevatorId, maxOccupancyThreshold);
         this.numFloors = numFloors;
         this.elevatorId = elevatorId;
         this.maxOccupancy = maxOccupancyThreshold;
         this.peopleinElevator = 0;
-        this.currentfloor = -1;
+        this.currentfloor = 0;
         this.ebList = new ArrayList<ElevatorBarrier>();
+        this.bc = bc;
+        stopfloorsOUT = new boolean[numFloors];
+        stopfloorsUP = new boolean[numFloors];
+        stopfloorsDOWN = new boolean[numFloors];
+        
     }
 
     public List<ElevatorBarrier> getEbList() {
@@ -42,51 +50,58 @@ public class Elevator extends AbstractElevator implements Runnable{
     @Override
 	public void run() {
 
-//        if (ec.isTravelingUp) {
-//            ec.VisitFloor(Parser.fd.ascendingFloorList.first());
-//        } else {
-//            ec.VisitFloor(Parser.fd.descendingFloorList.first());
-//        }
-//
-//        ec.OpenDoors();
-//        ec.ClosedDoors();
-
-        // is elevator going up or down?
-//        while(ec.currentFloor!=)
-//		while(ec.currentFloor != ){
-//		ec.VisitFloor();
-//	}		
-//		ec.VisitFloor(floor);
-//		ec.OpenDoors();
-        // rider enters, and requests a floor
-//		ec.ClosedDoors();
-////		while(){
-////			ec.VisitFloor();
-////		}
-//		ec.OpenDoors();
-        // rider exits, and other riders (if they exist) may enter elevator
-//		ec.ClosedDoors();
+    	while(true){
+    		//System.out.println(currentfloor + " " + stopfloorsUP[currentfloor] + " " + this.elevatorId);
+    		stopfloorsUP[1] = true;
+    		stopfloorsUP[2] = true;
+    		stopfloorsOUT[3] = true;
+    		stopfloorsOUT[4] = true;
+    		
+    		for(int i=0;i<numFloors;i++){
+    			
+    		}
+    		
+    		
+	    	if(stopfloorsUP[currentfloor] || stopfloorsOUT[currentfloor]){
+	    		
+	    		OpenDoors();
+	    		ClosedDoors();
+	    		VisitFloor(currentfloor+1);
+	    	}else{
+	    		VisitFloor(currentfloor+1);
+	    	}
+    	}
+    	
+    	
+    	
     }
 
     @Override
-    public void OpenDoors() {
+    public synchronized void OpenDoors() {
+    	System.out.println("Elevator"+this.elevatorId+" on Floor"+currentfloor+" opens");
+    	bc.ebListUP.get(currentfloor).raise();
+    	bc.ebListOUT.get(currentfloor).raise();
+    	
+    	//System.out.println("all riders enter");
+    }
+
+    @Override
+    public synchronized void ClosedDoors() {
+    	System.out.println("Elevator"+this.elevatorId+" on Floor"+currentfloor+" closes");
 
     }
 
     @Override
-    public void ClosedDoors() {
-
-    }
-
-    @Override
-    public void VisitFloor(int floor) {
+    public synchronized void VisitFloor(int floor) {
         currentfloor = floor;
+        System.out.println("Elevator"+this.elevatorId+" moves up/down to Floor"+floor);
     }
 
     @Override
-    public boolean Enter(int riderId) {
+    public synchronized boolean Enter(int riderId, int elevatorID, int floor) {
         if (peopleinElevator < maxOccupancy) {
             peopleinElevator++;
+            System.out.println("Rider"+riderId+" enters Elevator"+elevatorID+" on Floor"+floor);
             return true;
         } else {
             return false;
@@ -94,12 +109,14 @@ public class Elevator extends AbstractElevator implements Runnable{
     }
 
     @Override
-    public void Exit() {
+    public synchronized void Exit(int riderId, int elevatorID, int floor) {
         peopleinElevator--;
+        System.out.println("Rider"+riderId+" exits Elevator"+elevatorID+" on Floor"+floor);
     }
 
     @Override
-    public void RequestFloor(int floor, int riderId, boolean goUp) {
-
+    public synchronized void RequestFloor(int floor, int riderId, boolean goUp) {
+    	stopfloorsOUT[floor] = true;
+    	System.out.println("Rider"+riderId+" pushes Elevator"+this.elevatorId+" Button"+floor);
     }
 }
