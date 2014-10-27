@@ -15,6 +15,7 @@ public class Elevator extends AbstractElevator implements Runnable{
     boolean[] stopfloorsDOWN;
     boolean[] stopfloorsOUT; 
     protected Building bc;
+    boolean hasFinished = false;
     
     /**
      * Other variables/data structures as needed goes here
@@ -63,12 +64,13 @@ public class Elevator extends AbstractElevator implements Runnable{
     		
     		
 	    	if(stopfloorsUP[currentfloor] || stopfloorsOUT[currentfloor]){
-	    		
+	    		if(!hasFinished){
 	    		OpenDoors();
 	    		ClosedDoors();
 	    		VisitFloor(currentfloor+1);
+	    		}
 	    	}else{
-	    		VisitFloor(currentfloor+1);
+	    		if(!hasFinished) VisitFloor(currentfloor+1);
 	    	}
     	}
     	
@@ -111,6 +113,7 @@ public class Elevator extends AbstractElevator implements Runnable{
     @Override
     public synchronized void Exit(int riderId, int elevatorID, int floor) {
         peopleinElevator--;
+        if(peopleinElevator == 0) hasFinished = true;
         System.out.println("Rider"+riderId+" exits Elevator"+elevatorID+" on Floor"+floor);
     }
 
