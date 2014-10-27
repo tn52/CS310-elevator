@@ -3,7 +3,6 @@ package Elevator;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
@@ -23,16 +22,14 @@ public class Parser {
     protected ArrayList<ElevatorBarrier> elevatorBarrierListOUT = new ArrayList<ElevatorBarrier>();
     
     protected ArrayList<Elevator> mElevatorList;
-    protected Queue<Elevator> mElevatorQueue;
-    protected ArrayList<Rider> riderList;
+	protected ArrayList<Rider> riderList;
 	private Scanner input;
 	private Scanner lineScanner;
 
 	
 	public Parser(){
 		riderList = new ArrayList<Rider>();
-        mElevatorQueue = new LinkedList<Elevator>();
-//        mElevatorList = new ArrayList<Elevator>();
+        mElevatorList = new ArrayList<Elevator>();
 	}
 
     public ArrayList<Rider> getRiderList() {
@@ -65,12 +62,7 @@ public class Parser {
 		}
 		
 		//Initialize elevator control and Building
-
-
-        //Need to change placement of the elevator control initialization
-        //Because elevators are not added to queue until later
-//        ec = new ElevatorControl(mElevatorList);
-
+        
         bc = new Building(numFloors, numElevators, elevatorBarrierListOUT, elevatorBarrierListUP, elevatorBarrierListDOWN);
 		
         
@@ -106,23 +98,23 @@ public class Parser {
 			t.start();
 		}
 		
-
 		for (Elevator e:mElevatorList){
             Thread t = new Thread(e);
-
-		//Create E number of elevator threads and put into list, but not started 
-		for(int i = 0; i < numElevators; i++){
-			Elevator elevator = new Elevator(numFloors, i+1, maxCapacity, bc);
-//            mElevatorList.add(elevator);
-            mElevatorQueue.add(elevator);
-            Thread t1 = new Thread(elevator);
-            t1.start();
+            t.start();
 		}
-		}
+		
+		
+		
+//		Create elevator threads
+//		for(int i = 0; i < numElevators; i++){
+//            if (ecQueue!=null) {
+//                Elevator e = new Elevator(ecQueue.poll());
+//                Thread t = new Thread(e);
+//                t.start();
+//            }
+//		}
 
-
-
-    }
+	}
 	
 	
 	private int findNumLines(String filename) throws FileNotFoundException{
