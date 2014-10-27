@@ -1,6 +1,7 @@
 package Elevator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,6 +9,7 @@ public class Building extends AbstractBuilding {
 	
 	private int numFloors;
 	private int numElevators;
+    protected HashMap<Integer,ArrayList<Integer>> floorRequestMap;
 	
 	ArrayList<ElevatorBarrier> ebListOUT = new ArrayList<ElevatorBarrier>();
 	ArrayList<ElevatorBarrier> ebListUP = new ArrayList<ElevatorBarrier>();
@@ -23,9 +25,18 @@ public class Building extends AbstractBuilding {
         this.ebListOUT = ebListOUT;
         this.ebListUP = ebListUP;
         this.ebListDOWN = ebListDOWN;
+        this.floorRequestMap = new HashMap<Integer, ArrayList<Integer>>();
+        makeFloorArrays(numFloors);
     }
 
-	/** Called by Rider Threads, returns the elevator that can efficiently serve rider. */
+    private void makeFloorArrays(int numFloors) {
+        for (int i = 0; i < numFloors; i++) {
+            ArrayList<Integer> requestListOfFloor = new ArrayList<Integer>();
+            floorRequestMap.put(i + 1, requestListOfFloor);
+        }
+    }
+
+    /** Called by Rider Threads, returns the elevator that can efficiently serve rider. */
 	@Override
 	public synchronized AbstractElevator CallUp(int fromFloor, int riderID, ElevatorBarrier eb) {
 		//upBarriers.add(eb);
