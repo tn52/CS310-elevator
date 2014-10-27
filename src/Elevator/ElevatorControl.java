@@ -5,9 +5,11 @@ import java.util.*;
 public class ElevatorControl {
 
     private Queue<Elevator> mElevatorQueue;
-
-    public ElevatorControl(Queue<Elevator> mElevatorQueue) {
+    private Building bc;
+    
+    public ElevatorControl(Queue<Elevator> mElevatorQueue, Building bc) {
         this.mElevatorQueue = mElevatorQueue;
+        this.bc = bc;
     }
 
 
@@ -34,7 +36,7 @@ public class ElevatorControl {
     private Elevator spaceAvailableElevatorsUp(Elevator elevator, Queue<Elevator> elevatorQueue, int fromFloor) {
         boolean elevatorExists = false;
 
-        for (int j = fromFloor+1; j < elevator.stopfloorsOUT.length; j++) {
+        for (int j = fromFloor+1; j < bc.ebListOUT.size(); j++) {
             if (elevator.stopfloorsOUT[j]) {
                 elevatorExists = true;
                 break;

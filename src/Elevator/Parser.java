@@ -94,7 +94,7 @@ public class Parser {
             mElevatorQueue.add(elevator);
         }
 		
-		ec = new ElevatorControl(mElevatorQueue);
+		ec = new ElevatorControl(mElevatorQueue, bc);
 		
 		for (Rider r:riderList){
 			Thread t = new Thread(r);

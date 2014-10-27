@@ -48,7 +48,6 @@ public class Building extends AbstractBuilding {
 //        Thread t = new Thread(tempElevator);
 //        t.start();
 		
-		System.out.println(fromFloor +" "+ tempElevator.stopfloorsUP[fromFloor] + " " + tempElevator.elevatorId);
 		return tempElevator;
     }
 

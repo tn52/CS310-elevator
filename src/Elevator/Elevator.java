@@ -52,18 +52,10 @@ public class Elevator extends AbstractElevator implements Runnable{
 	public void run() {
 
     	while(true){
-    		//System.out.println(currentfloor + " " + stopfloorsUP[currentfloor] + " " + this.elevatorId);
-    		stopfloorsUP[1] = true;
-    		stopfloorsUP[2] = true;
-    		stopfloorsOUT[3] = true;
-    		stopfloorsOUT[4] = true;
     		
-    		for(int i=0;i<numFloors;i++){
-    			
-    		}
-    		
-    		
-	    	if(stopfloorsUP[currentfloor] || stopfloorsOUT[currentfloor]){
+
+//	    	 if(bc.ebListUP.get(currentfloor).numWaiters>0 || bc.ebListOUT.get(currentfloor).numWaiters>0){
+    		if(stopfloorsUP[currentfloor] || stopfloorsOUT[currentfloor]){
 	    		if(!hasFinished){
 	    		OpenDoors();
 	    		ClosedDoors();
