@@ -3,6 +3,8 @@ package Elevator;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class Parser {
@@ -21,14 +23,16 @@ public class Parser {
     protected ArrayList<ElevatorBarrier> elevatorBarrierListOUT = new ArrayList<ElevatorBarrier>();
     
     protected ArrayList<Elevator> mElevatorList;
-	protected ArrayList<Rider> riderList;
+    protected Queue<Elevator> mElevatorQueue;
+    protected ArrayList<Rider> riderList;
 	private Scanner input;
 	private Scanner lineScanner;
 
 	
 	public Parser(){
 		riderList = new ArrayList<Rider>();
-        mElevatorList = new ArrayList<Elevator>();
+        mElevatorQueue = new LinkedList<Elevator>();
+//        mElevatorList = new ArrayList<Elevator>();
 	}
 
     public ArrayList<Rider> getRiderList() {
@@ -61,7 +65,10 @@ public class Parser {
 		}
 		
 		//Initialize elevator control and Building
-        ec = new ElevatorControl(mElevatorList);
+
+        //Need to change placement of the elevator control initialization
+        //Because elevators are not added to queue until later
+//        ec = new ElevatorControl(mElevatorList);
         bc = new Building(numFloors, numElevators, elevatorBarrierListOUT, elevatorBarrierListUP, elevatorBarrierListDOWN);
 		
         
@@ -92,23 +99,16 @@ public class Parser {
 		//Create E number of elevator threads and put into list, but not started 
 		for(int i = 0; i < numElevators; i++){
 			Elevator elevator = new Elevator(numFloors, i+1, maxCapacity, bc);
-            mElevatorList.add(elevator);
+//            mElevatorList.add(elevator);
+            mElevatorQueue.add(elevator);
             Thread t = new Thread(elevator);
             t.start();
 		}
-		
-		
-		
-//		Create elevator threads
-//		for(int i = 0; i < numElevators; i++){
-//            if (ecQueue!=null) {
-//                Elevator e = new Elevator(ecQueue.poll());
-//                Thread t = new Thread(e);
-//                t.start();
-//            }
-//		}
 
-	}
+        ec = new ElevatorControl(mElevatorQueue);
+
+
+    }
 	
 	
 	private int findNumLines(String filename) throws FileNotFoundException{

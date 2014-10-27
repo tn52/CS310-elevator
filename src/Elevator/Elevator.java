@@ -10,7 +10,7 @@ public class Elevator extends AbstractElevator implements Runnable{
     protected int currentfloor;
     protected List<ElevatorBarrier> ebList;
     private int maxOccupancy;
-    private int peopleinElevator;
+    protected int peopleinElevator;
     boolean[] stopfloorsUP;
     boolean[] stopfloorsDOWN;
     boolean[] stopfloorsOUT; 
