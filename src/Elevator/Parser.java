@@ -3,6 +3,7 @@ package Elevator;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
@@ -20,8 +21,8 @@ public class Parser {
     protected ArrayList<ElevatorBarrier> elevatorBarrierListUP = new ArrayList<ElevatorBarrier>();
     protected ArrayList<ElevatorBarrier> elevatorBarrierListDOWN = new ArrayList<ElevatorBarrier>();
     protected ArrayList<ElevatorBarrier> elevatorBarrierListOUT = new ArrayList<ElevatorBarrier>();
-    
-    protected ArrayList<Elevator> mElevatorList;
+
+    protected Queue<Elevator> mElevatorQueue;
 	protected ArrayList<Rider> riderList;
 	private Scanner input;
 	private Scanner lineScanner;
@@ -29,7 +30,8 @@ public class Parser {
 	
 	public Parser(){
 		riderList = new ArrayList<Rider>();
-        mElevatorList = new ArrayList<Elevator>();
+        mElevatorQueue = new LinkedList<Elevator>();
+
 	}
 
     public ArrayList<Rider> getRiderList() {
@@ -88,23 +90,23 @@ public class Parser {
 		//Create E number of elevator threads and put into list, but not started 
 		for(int i = 0; i < numElevators; i++){
 			Elevator elevator = new Elevator(numFloors, i+1, maxCapacity, bc);
-            mElevatorList.add(elevator);
-		}
+//            mElevatorList.add(elevator);
+            mElevatorQueue.add(elevator);
+        }
 		
-		ec = new ElevatorControl((Queue<Elevator>) mElevatorList);
+		ec = new ElevatorControl(mElevatorQueue);
 		
 		for (Rider r:riderList){
 			Thread t = new Thread(r);
 			t.start();
 		}
-		
-		for (Elevator e:mElevatorList){
+
+        for (Elevator e : mElevatorQueue) {
             Thread t = new Thread(e);
             t.start();
-		}
-		
-		
-		
+        }
+
+
 //		Create elevator threads
 //		for(int i = 0; i < numElevators; i++){
 //            if (ecQueue!=null) {
