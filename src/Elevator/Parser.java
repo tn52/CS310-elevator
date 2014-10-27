@@ -65,14 +65,12 @@ public class Parser {
 		}
 		
 		//Initialize elevator control and Building
-<<<<<<< HEAD
-        
-=======
+
 
         //Need to change placement of the elevator control initialization
         //Because elevators are not added to queue until later
 //        ec = new ElevatorControl(mElevatorList);
->>>>>>> 37717dea30bc4e523fa38ddd1a8182c314b9460a
+
         bc = new Building(numFloors, numElevators, elevatorBarrierListOUT, elevatorBarrierListUP, elevatorBarrierListDOWN);
 		
         
@@ -101,28 +99,27 @@ public class Parser {
             mElevatorList.add(elevator);
 		}
 		
-		ec = new ElevatorControl(mElevatorList);
+		ec = new ElevatorControl((Queue<Elevator>) mElevatorList);
 		
 		for (Rider r:riderList){
 			Thread t = new Thread(r);
 			t.start();
 		}
 		
-<<<<<<< HEAD
+
 		for (Elevator e:mElevatorList){
             Thread t = new Thread(e);
-=======
+
 		//Create E number of elevator threads and put into list, but not started 
 		for(int i = 0; i < numElevators; i++){
 			Elevator elevator = new Elevator(numFloors, i+1, maxCapacity, bc);
 //            mElevatorList.add(elevator);
             mElevatorQueue.add(elevator);
-            Thread t = new Thread(elevator);
->>>>>>> 37717dea30bc4e523fa38ddd1a8182c314b9460a
-            t.start();
+            Thread t1 = new Thread(elevator);
+            t1.start();
+		}
 		}
 
-        ec = new ElevatorControl(mElevatorQueue);
 
 
     }

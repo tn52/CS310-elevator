@@ -10,11 +10,7 @@ public class ElevatorControl {
         this.mElevatorQueue = mElevatorQueue;
     }
 
-<<<<<<< HEAD
-    public Elevator returnBestElevator(int fromFloor, boolean goingUp, int riderID) {
 
-            return mElevators.get(0);
-=======
     public Elevator returnBestElevator(int fromFloor, boolean goUp, int riderID) {
 
         Elevator elevator = mElevatorQueue.poll();
@@ -67,7 +63,6 @@ public class ElevatorControl {
         } else {
             elevatorQueue.add(elevator);
             spaceAvailableElevatorsDown(elevatorQueue.poll(), elevatorQueue, fromFloor);
->>>>>>> 37717dea30bc4e523fa38ddd1a8182c314b9460a
         }
         return null;
 
