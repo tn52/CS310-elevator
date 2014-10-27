@@ -61,7 +61,7 @@ public class Parser {
 		}
 		
 		//Initialize elevator control and Building
-        ec = new ElevatorControl(mElevatorList);
+        
         bc = new Building(numFloors, numElevators, elevatorBarrierListOUT, elevatorBarrierListUP, elevatorBarrierListDOWN);
 		
         
@@ -84,16 +84,21 @@ public class Parser {
 		
 		testParser();
 		
+		//Create E number of elevator threads and put into list, but not started 
+		for(int i = 0; i < numElevators; i++){
+			Elevator elevator = new Elevator(numFloors, i+1, maxCapacity, bc);
+            mElevatorList.add(elevator);
+		}
+		
+		ec = new ElevatorControl(mElevatorList);
+		
 		for (Rider r:riderList){
 			Thread t = new Thread(r);
 			t.start();
 		}
 		
-		//Create E number of elevator threads and put into list, but not started 
-		for(int i = 0; i < numElevators; i++){
-			Elevator elevator = new Elevator(numFloors, i+1, maxCapacity, bc);
-            mElevatorList.add(elevator);
-            Thread t = new Thread(elevator);
+		for (Elevator e:mElevatorList){
+            Thread t = new Thread(e);
             t.start();
 		}
 		

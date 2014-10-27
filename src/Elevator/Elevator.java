@@ -77,16 +77,15 @@ public class Elevator extends AbstractElevator implements Runnable{
     }
 
     @Override
-    public synchronized void OpenDoors() {
+    public void OpenDoors() {
     	System.out.println("Elevator"+this.elevatorId+" on Floor"+currentfloor+" opens");
     	bc.ebListUP.get(currentfloor).raise();
     	bc.ebListOUT.get(currentfloor).raise();
-    	
-    	//System.out.println("all riders enter");
+    	    	
     }
 
     @Override
-    public synchronized void ClosedDoors() {
+    public void ClosedDoors() {
     	System.out.println("Elevator"+this.elevatorId+" on Floor"+currentfloor+" closes");
 
     }
@@ -99,6 +98,7 @@ public class Elevator extends AbstractElevator implements Runnable{
 
     @Override
     public synchronized boolean Enter(int riderId, int elevatorID, int floor) {
+    	
         if (peopleinElevator < maxOccupancy) {
             peopleinElevator++;
             System.out.println("Rider"+riderId+" enters Elevator"+elevatorID+" on Floor"+floor);

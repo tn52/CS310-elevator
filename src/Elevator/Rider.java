@@ -26,7 +26,7 @@ public class Rider implements Runnable{
             elevator = (Elevator) bc.CallUp(startFloor, riderID, eb);	//CALLUP and return elevator from scheduling algorithm
             
             eb.arrive();												//ARRIVE and wait at barrier
-            
+
             if (isRiderIn = elevator.Enter(riderID, elevator.elevatorId, startFloor)) {	//if elevator not full and possible to ENTER
             	
 //            	bc.removeUpBarrier(eb);
