@@ -16,10 +16,10 @@ public class ElevatorControl {
     public Elevator returnBestElevator(int fromFloor, boolean goUp, int riderID) {
 
         Elevator elevator = mElevatorQueue.poll();
-        if (elevator.peopleinElevator == 0) {
+        if (elevator.peopleinElevator.size() == 0) {
             mElevatorQueue.add(elevator);
             return elevator;
-        } else if (elevator.peopleinElevator == elevator.maxOccupancyThreshold) {
+        } else if (elevator.peopleinElevator.size() == elevator.maxOccupancyThreshold) {
             mElevatorQueue.add(elevator);
             returnBestElevator(fromFloor, goUp, riderID);
         } else {

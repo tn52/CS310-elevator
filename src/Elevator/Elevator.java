@@ -1,7 +1,9 @@
 package Elevator;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Elevator extends AbstractElevator implements Runnable{
 
@@ -10,12 +12,13 @@ public class Elevator extends AbstractElevator implements Runnable{
     protected int currentfloor;
     protected List<ElevatorBarrier> ebList;
     private int maxOccupancy;
-    protected int peopleinElevator;
+    protected Queue<Rider> peopleinElevator;
     boolean[] stopfloorsUP;
     boolean[] stopfloorsDOWN;
     boolean[] stopfloorsOUT; 
     protected Building bc;
-    boolean hasFinished = false;
+    boolean directionUp;
+    boolean directionDown;
     
     /**
      * Other variables/data structures as needed goes here
@@ -29,13 +32,17 @@ public class Elevator extends AbstractElevator implements Runnable{
         this.numFloors = numFloors;
         this.elevatorId = elevatorId;
         this.maxOccupancy = maxOccupancyThreshold;
-        this.peopleinElevator = 0;
-        this.currentfloor = 0;
+        this.peopleinElevator = new LinkedList<Rider>();
+        this.currentfloor = 1;
         this.ebList = new ArrayList<ElevatorBarrier>();
         this.bc = bc;
         stopfloorsOUT = new boolean[numFloors];
         stopfloorsUP = new boolean[numFloors];
         stopfloorsDOWN = new boolean[numFloors];
+        directionUp = false;
+        directionDown = false;
+        
+        
         
     }
 
@@ -50,24 +57,63 @@ public class Elevator extends AbstractElevator implements Runnable{
 
     @Override
 	public void run() {
-
+    	boolean goingUp;
+    	boolean goingDown;
+    	boolean idle;
     	while(true){
+    		goingUp = directionUp && !directionDown;
+        	goingDown = !directionUp && directionDown;
+        	idle = !directionUp && !directionDown;
+    		if(stopfloorsUP[currentfloor] && (goingUp || idle)) {
+    			OpenDoors();
+				ClosedDoors();
+				directionUp = true;
+				directionDown = false;
+				stopfloorsUP[currentfloor] = false;
+				stopfloorsDOWN[currentfloor] = false;
+				stopfloorsOUT[currentfloor] = false;
+    		}
+    		else if (stopfloorsDOWN[currentfloor] && (goingDown || idle)) {
+    			OpenDoors();
+				ClosedDoors();
+				directionDown = true;
+				directionUp = false;
+				stopfloorsUP[currentfloor] = false;
+				stopfloorsDOWN[currentfloor] = false;
+				stopfloorsOUT[currentfloor] = false;
+    		}
+    		else if (stopfloorsOUT[currentfloor]) {
+    			OpenDoors();
+				ClosedDoors();
+				stopfloorsUP[currentfloor] = false;
+				stopfloorsDOWN[currentfloor] = false;
+				stopfloorsOUT[currentfloor] = false;
+				if(!this.peopleinElevator.isEmpty()) {
+    				Rider rider = this.peopleinElevator.peek();
+    				if(rider.destFloor < currentfloor) {
+    					directionUp = false;
+    					directionDown = true;
+    				}
+    				else {
+    					directionUp = true;
+    					directionDown = false;
+    				}
+				}
+				else {
+					directionDown = false;
+    				directionUp = false;
+				}
+    		}
     		
-
-//	    	 if(bc.ebListUP.get(currentfloor).numWaiters>0 || bc.ebListOUT.get(currentfloor).numWaiters>0){
-    		if(stopfloorsUP[currentfloor] || stopfloorsOUT[currentfloor]){
-	    		if(!hasFinished){
-	    		OpenDoors();
-	    		ClosedDoors();
-	    		VisitFloor(currentfloor+1);
-	    		}
-	    	}else{
-	    		if(!hasFinished) VisitFloor(currentfloor+1);
-	    	}
+    		if(directionUp && !directionDown) {
+    			VisitFloor(currentfloor+1);
+    		}
+    		else if(!directionUp && directionDown) {
+    			VisitFloor(currentfloor-1);
+    		}
+    		else {
+    		}
     	}
-    	
-    	
-    	
     }
 
     @Override
@@ -91,11 +137,11 @@ public class Elevator extends AbstractElevator implements Runnable{
     }
 
     @Override
-    public synchronized boolean Enter(int riderId, int elevatorID, int floor) {
+    public synchronized boolean Enter(Rider rider, int elevatorID, int floor) {
     	
-        if (peopleinElevator < maxOccupancy) {
-            peopleinElevator++;
-            System.out.println("Rider"+riderId+" enters Elevator"+elevatorID+" on Floor"+floor);
+        if (peopleinElevator.size() < maxOccupancy) {
+            peopleinElevator.add(rider);
+            System.out.println("Rider"+rider.riderID+" enters Elevator"+elevatorID+" on Floor"+floor);
             return true;
         } else {
             return false;
@@ -103,10 +149,9 @@ public class Elevator extends AbstractElevator implements Runnable{
     }
 
     @Override
-    public synchronized void Exit(int riderId, int elevatorID, int floor) {
-        peopleinElevator--;
-        if(peopleinElevator == 0) hasFinished = true;
-        System.out.println("Rider"+riderId+" exits Elevator"+elevatorID+" on Floor"+floor);
+    public synchronized void Exit(Rider rider, int elevatorID, int floor) {
+        peopleinElevator.remove(rider);
+        System.out.println("Rider"+rider.riderID+" exits Elevator"+elevatorID+" on Floor"+floor);
     }
 
     @Override

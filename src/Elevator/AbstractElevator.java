@@ -38,13 +38,17 @@ public abstract class AbstractElevator {
   	 */
 
 	/* Enter the elevator */
-	public abstract boolean Enter(int riderId, int elevatorID, int floor);
+	public boolean Enter(Rider rider, int elevatorID, int floor) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 	/* Exit the elevator */
-	public abstract void Exit(int riderId, int elevatorID, int floor);
+	public void Exit(Rider rider, int elevatorID, int floor) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	/* Request a destination floor once you enter */
  	public abstract void RequestFloor(int floor, int riderId, boolean goUp);
-	
-
 }

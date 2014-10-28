@@ -21,41 +21,32 @@ public class Rider implements Runnable{
 	public void run() {
 		boolean isGoingUp = startFloor < destFloor;
 
+		eb = bc.ebListUP.get(startFloor);							//get event barrier on the rider's start floor
 		if(isGoingUp) {
-			eb = bc.ebListUP.get(startFloor);							//get event barrier on the rider's start floor
-            elevator = (Elevator) bc.CallUp(startFloor, riderID, eb);	//CALLUP and return elevator from scheduling algorithm
-            
-            eb.arrive();												//ARRIVE and wait at barrier
-
-            if (isRiderIn = elevator.Enter(riderID, elevator.elevatorId, startFloor)) {	//if elevator not full and possible to ENTER
-            	
-//            	bc.removeUpBarrier(eb);
-//            	elevator.addElevatorBarrier(eb);
-            	
-            	eb.complete();
-                elevator.RequestFloor(destFloor, riderID, isGoingUp);
-                eb = bc.ebListOUT.get(destFloor);
-                eb.arrive();
-                elevator.Exit(riderID, elevator.elevatorId, destFloor);
-                eb.complete();
-            }
-        } else{
-//			elevator = (Elevator) bc.CallDown(startFloor, riderID, eb);
-//			eb.arrive();
-//			
-//	        if (isRiderIn = elevator.Enter(riderID)) {
-//	        	
-//            	bc.removeDownBarrier(eb);
-//            	
-//            	elevator.addElevatorBarrier(eb);
-//	            elevator.RequestFloor(destFloor, riderID, isGoingUp);
-//	            elevator.Exit();
-//	        }
+			elevator = (Elevator) bc.CallUp(startFloor, riderID, eb);	//CALLUP and return elevator from scheduling algorithm
 		}
-
+		else {
+			elevator = (Elevator) bc.CallDown(startFloor, riderID, eb);	//CALLDOWN and return elevator from scheduling algorithm
+		}
 		
+		if(elevator.currentfloor < startFloor) {
+			elevator.directionUp = true;
+			elevator.directionDown = false;
+		}
+		else if (elevator.currentfloor > startFloor) {
+			elevator.directionUp = false;
+			elevator.directionDown = true;
+		}
 		
-		
+		eb.arrive();												//ARRIVE and wait at barrier
+		if (isRiderIn = elevator.Enter(this, elevator.elevatorId, startFloor)) {	//if elevator not full and possible to ENTER
+			eb.complete();
+			elevator.RequestFloor(destFloor, riderID, isGoingUp);
+			eb = bc.ebListOUT.get(destFloor);
+			eb.arrive();
+			elevator.Exit(this, elevator.elevatorId, destFloor);
+			eb.complete();
+		}	
 		
 	}
 

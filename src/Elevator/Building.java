@@ -53,8 +53,10 @@ public class Building extends AbstractBuilding {
 
 	@Override
 	public synchronized AbstractElevator CallDown(int fromFloor, int riderID, ElevatorBarrier eb) {
-		//downBarriers.add(eb);
-        return Parser.ec.returnBestElevator(fromFloor, false, riderID);
+		System.out.println("Rider"+riderID+" pushes DOWN "+fromFloor);
+		Elevator tempElevator = Parser.ec.returnBestElevator(fromFloor, false, riderID);
+		tempElevator.stopfloorsDOWN[fromFloor] = true;
+        return tempElevator;
     }
 
     public int getNumElevators() {
