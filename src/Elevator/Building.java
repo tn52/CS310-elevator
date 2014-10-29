@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class Building extends AbstractBuilding {
 	
-	private int numFloors;
+	protected int numFloors;
 	private int numElevators;
     protected HashMap<Integer,ArrayList<Integer>> floorRequestMap;
 	
@@ -39,15 +39,10 @@ public class Building extends AbstractBuilding {
     /** Called by Rider Threads, returns the elevator that can efficiently serve rider. */
 	@Override
 	public synchronized AbstractElevator CallUp(int fromFloor, int riderID, ElevatorBarrier eb) {
-
 		System.out.println("Rider"+riderID+" pushes UP "+fromFloor);
 
 		Elevator tempElevator = Parser.ec.returnBestElevator(fromFloor, true);
-
-
 		tempElevator.stopfloorsUP[fromFloor] = true;
-
-		
 		return tempElevator;
     }
 

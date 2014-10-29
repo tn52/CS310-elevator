@@ -18,7 +18,6 @@ public class ElevatorBarrier extends AbstractEventBarrier {
 	
 	@Override
 	public synchronized void arrive() {
-
 		numWaiters++;
 		//System.out.println("Thread arrived, waiters: " + numWaiters);
 		while(!eventSignaled){
@@ -60,7 +59,6 @@ public class ElevatorBarrier extends AbstractEventBarrier {
 
 	@Override
 	public synchronized void complete() {
-
 		numWaiters--;
 		//System.out.println("Thread completed, waiters: "+ numWaiters);
 		while(numWaiters!=0){

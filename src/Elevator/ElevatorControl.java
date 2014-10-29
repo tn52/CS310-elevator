@@ -37,11 +37,10 @@ public class ElevatorControl {
         if (elevator.currentfloor <= fromFloor && elevator.currentfloor > elevatorQueue.peek().currentfloor) {
               elevatorExists = true;
         }
-
+        elevatorQueue.add(elevator);
         if (elevatorExists) {
             return elevator;
         } else {
-            elevatorQueue.add(elevator);
             spaceAvailableElevatorsDown(elevatorQueue.poll(), elevatorQueue, fromFloor);
         }
        return null;
@@ -53,10 +52,10 @@ public class ElevatorControl {
         if (elevator.currentfloor >= fromFloor && elevator.currentfloor < elevatorQueue.peek().currentfloor) {
             elevatorExists = true;
         }
+        elevatorQueue.add(elevator);
         if (elevatorExists) {
             return elevator;
         } else {
-            elevatorQueue.add(elevator);
             spaceAvailableElevatorsUp(elevatorQueue.poll(), elevatorQueue, fromFloor);
         }
         return null;

@@ -57,15 +57,10 @@ public class Elevator extends AbstractElevator implements Runnable{
 
     @Override
 	public void run() {
-    	boolean goingUp;
-    	boolean goingDown;
-    	boolean idle;
     	while(true){
-    		goingUp = directionUp && !directionDown;
-        	goingDown = !directionUp && directionDown;
-        	idle = !directionUp && !directionDown;
-    		if(stopfloorsUP[currentfloor] && (goingUp || idle)) { //something is happening here
+    		if(stopfloorsUP[currentfloor]) { //something is happening here
     			OpenDoors();
+    			bc.ebListUP.get(currentfloor).raise();
 				ClosedDoors();
 				directionUp = true;
 				directionDown = false;
@@ -73,8 +68,9 @@ public class Elevator extends AbstractElevator implements Runnable{
 				stopfloorsDOWN[currentfloor] = false;
 				stopfloorsOUT[currentfloor] = false;
     		}
-    		else if (stopfloorsDOWN[currentfloor] && (goingDown || idle)) {
+    		else if (stopfloorsDOWN[currentfloor]) {
     			OpenDoors();
+    			bc.ebListDOWN.get(currentfloor).raise();
 				ClosedDoors();
 				directionDown = true;
 				directionUp = false;
@@ -84,6 +80,7 @@ public class Elevator extends AbstractElevator implements Runnable{
     		}
     		else if (stopfloorsOUT[currentfloor]) {
     			OpenDoors();
+    			bc.ebListOUT.get(currentfloor).raise();
 				ClosedDoors();
 				stopfloorsUP[currentfloor] = false;
 				stopfloorsDOWN[currentfloor] = false;
@@ -100,8 +97,29 @@ public class Elevator extends AbstractElevator implements Runnable{
     				}
 				}
 				else {
+					directionUp = false;
 					directionDown = false;
-    				directionUp = false;
+					boolean remainingRequestsUp = false;
+					for(int i=0; i<bc.numFloors; i++){
+						if(stopfloorsUP[i]){
+							remainingRequestsUp = true;
+						}
+					}
+					if(remainingRequestsUp) {
+						directionUp = true;
+						directionDown = false;
+					}
+					
+					boolean remainingRequestsDown = false;
+					for(int i=0; i<bc.numFloors; i++){
+						if(stopfloorsDOWN[i]){
+							remainingRequestsDown = true;
+						}
+					}
+					if(remainingRequestsDown) {
+						directionUp = false;
+						directionDown = true;
+					}
 				}
     		}
     		
@@ -118,28 +136,22 @@ public class Elevator extends AbstractElevator implements Runnable{
 
     @Override
     public void OpenDoors() {
-    	System.out.println("Elevator"+this.elevatorId+" on Floor"+currentfloor+" opens");
-    	bc.ebListUP.get(currentfloor).raise();
-    	bc.ebListOUT.get(currentfloor).raise();
-//        bc.ebListDOWN.get(currentfloor).raise();
-    	    	
+    	System.out.println("Elevator"+this.elevatorId+" on Floor"+currentfloor+" opens");    	
     }
 
     @Override
     public void ClosedDoors() {
     	System.out.println("Elevator"+this.elevatorId+" on Floor"+currentfloor+" closes");
-
     }
 
     @Override
     public synchronized void VisitFloor(int floor) {
         currentfloor = floor;
-        System.out.println("Elevator"+this.elevatorId+" moves up/down to Floor"+floor);
+        System.out.println("Elevator"+this.elevatorId+" moves to Floor"+floor);
     }
 
     @Override
     public synchronized boolean Enter(Rider rider, int elevatorID, int floor) {
-    	
         if (peopleinElevator.size() < maxOccupancy) {
             peopleinElevator.add(rider);
             System.out.println("Rider"+rider.riderID+" enters Elevator"+elevatorID+" on Floor"+floor);
