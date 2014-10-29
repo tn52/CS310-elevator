@@ -23,6 +23,7 @@ public class Parser {
     protected ArrayList<ElevatorBarrier> elevatorBarrierListOUT = new ArrayList<ElevatorBarrier>();
 
     protected Queue<Elevator> mElevatorQueue;
+    protected ArrayList<Elevator> mElevatorList;
 	protected ArrayList<Rider> riderList;
 	private Scanner input;
 	private Scanner lineScanner;
@@ -31,6 +32,7 @@ public class Parser {
 	public Parser(){
 		riderList = new ArrayList<Rider>();
         mElevatorQueue = new LinkedList<Elevator>();
+        mElevatorList = new ArrayList<Elevator>();
 
 	}
 
@@ -90,6 +92,7 @@ public class Parser {
 		for(int i = 0; i < numElevators; i++){
 			Elevator elevator = new Elevator(numFloors, i+1, maxCapacity, bc);
             mElevatorQueue.add(elevator);
+            mElevatorList.add(elevator);
         }
 		
 		ec = new ElevatorControl(mElevatorQueue, bc);
@@ -99,7 +102,12 @@ public class Parser {
 			t.start();
 		}
 
-        for (Elevator e : mElevatorQueue) {
+//        for (Elevator e : mElevatorQueue) {
+//            Thread t = new Thread(e);
+//            t.start();
+//        }
+
+        for (Elevator e: mElevatorList) {
             Thread t = new Thread(e);
             t.start();
         }
