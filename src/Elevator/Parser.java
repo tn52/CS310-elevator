@@ -68,7 +68,8 @@ public class Parser {
 		//Initialize elevator control and Building
         
         bc = new Building(numFloors, numElevators, elevatorBarrierListOUT, elevatorBarrierListUP, elevatorBarrierListDOWN);
-		
+
+        testParser();
         
 		/* Create rider threads
 		 * Benson: Replaced number of riders with number of requests.
@@ -87,7 +88,7 @@ public class Parser {
 			//t.start();
 		}
 		
-		testParser();
+//		testParser();
 
 		for(int i = 0; i < numElevators; i++){
 			Elevator elevator = new Elevator(numFloors, i+1, maxCapacity, bc);
