@@ -77,12 +77,11 @@ public class Parser {
 			int startFloor = input.nextInt();
 			int destFloor = input.nextInt();
 			
-			//ElevatorBarrier eb = new ElevatorBarrier(startFloor, destFloor);
+
 			
 			Rider r = new Rider(bc, riderID, startFloor, destFloor);
 			riderList.add(r);
-			//Thread t = new Thread(r);
-			//t.start();
+
 		}
 		
 		testParser();
@@ -90,7 +89,6 @@ public class Parser {
 		//Create E number of elevator threads and put into list, but not started 
 		for(int i = 0; i < numElevators; i++){
 			Elevator elevator = new Elevator(numFloors, i+1, maxCapacity, bc);
-//            mElevatorList.add(elevator);
             mElevatorQueue.add(elevator);
         }
 		
@@ -101,21 +99,11 @@ public class Parser {
 			t.start();
 		}
 
-        for (Elevator e : mElevatorQueue) {
-            Thread t = new Thread(e);
+
+        for (int k = 0; k < mElevatorQueue.size(); k++) {
+            Thread t = new Thread(mElevatorQueue.poll());
             t.start();
         }
-
-
-//		Create elevator threads
-//		for(int i = 0; i < numElevators; i++){
-//            if (ecQueue!=null) {
-//                Elevator e = new Elevator(ecQueue.poll());
-//                Thread t = new Thread(e);
-//                t.start();
-//            }
-//		}
-
 	}
 	
 	
