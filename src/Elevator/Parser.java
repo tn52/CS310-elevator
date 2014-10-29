@@ -128,10 +128,10 @@ public class Parser {
 	}
 
     public void testParser(){
-        System.out.println("Number of Elevators: " + numElevators);
-        System.out.println("Max Capacity per Elevator: " + maxCapacity);
         System.out.println("Number of Floors: " + numFloors);
+        System.out.println("Number of Elevators: " + numElevators);
         System.out.println("Number of Riders: " + numRiders);
+        System.out.println("Max Capacity per Elevator: " + maxCapacity);
         for(Rider r : riderList){
             System.out.println("Rider " + r.riderID + ": " + "Starts from floor " + r.startFloor + " And ends at floor " + r.destFloor);
         }
