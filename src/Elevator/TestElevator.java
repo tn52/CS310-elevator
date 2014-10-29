@@ -6,10 +6,9 @@ public class TestElevator {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		
-		/* Test Parser */
+		/* Run elevator */
 		Parser parser = new Parser();
 		parser.parse("InputTest1.txt");
-		//parser.testParser();
 		
 	}
 
