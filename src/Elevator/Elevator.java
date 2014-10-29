@@ -58,7 +58,7 @@ public class Elevator extends AbstractElevator implements Runnable{
     @Override
 	public void run() {
     	while(true){
-    		if(stopfloorsUP[currentfloor]) { //something is happening here
+    		if(stopfloorsUP[currentfloor]) {
     			OpenDoors();
     			bc.ebListUP.get(currentfloor).raise();
 				ClosedDoors();
@@ -99,26 +99,29 @@ public class Elevator extends AbstractElevator implements Runnable{
 				else {
 					directionUp = false;
 					directionDown = false;
-					boolean remainingRequestsUp = false;
+					boolean remainingRequests = false;
+					int requestFloor = 0;
 					for(int i=0; i<bc.numFloors; i++){
 						if(stopfloorsUP[i]){
-							remainingRequestsUp = true;
+							remainingRequests = true;
+							requestFloor = i+1;
 						}
-					}
-					if(remainingRequestsUp) {
-						directionUp = true;
-						directionDown = false;
-					}
-					
-					boolean remainingRequestsDown = false;
-					for(int i=0; i<bc.numFloors; i++){
 						if(stopfloorsDOWN[i]){
-							remainingRequestsDown = true;
+							remainingRequests = true;
+							requestFloor = i+1;
 						}
 					}
-					if(remainingRequestsDown) {
-						directionUp = false;
-						directionDown = true;
+					if(remainingRequests) {
+						if(requestFloor == 0) {
+							directionUp = false;
+							directionDown = false;
+						}
+						else if(requestFloor > currentfloor) {
+							directionUp = true;
+						}
+						else if(requestFloor < currentfloor) {
+							directionDown = true;
+						}
 					}
 				}
     		}
