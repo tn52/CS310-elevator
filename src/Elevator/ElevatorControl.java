@@ -5,15 +5,13 @@ import java.util.*;
 public class ElevatorControl {
 
     private Queue<Elevator> mElevatorQueue;
-    private Building bc;
     
     public ElevatorControl(Queue<Elevator> mElevatorQueue, Building bc) {
         this.mElevatorQueue = mElevatorQueue;
-        this.bc = bc;
     }
 
 
-    public Elevator returnBestElevator(int fromFloor, boolean goUp, int riderID) {
+    public Elevator returnBestElevator(int fromFloor, boolean goUp) {
 
         Elevator elevator = mElevatorQueue.poll();
         if (elevator.peopleinElevator.size() == 0) {
@@ -21,7 +19,7 @@ public class ElevatorControl {
             return elevator;
         } else if (elevator.peopleinElevator.size() == elevator.maxOccupancyThreshold) {
             mElevatorQueue.add(elevator);
-            returnBestElevator(fromFloor, goUp, riderID);
+            returnBestElevator(fromFloor, goUp);
         } else {
             if (goUp) {
                 spaceAvailableElevatorsUp(elevator, mElevatorQueue, fromFloor);
@@ -36,17 +34,15 @@ public class ElevatorControl {
     private Elevator spaceAvailableElevatorsUp(Elevator elevator, Queue<Elevator> elevatorQueue, int fromFloor) {
         boolean elevatorExists = false;
 
-        for (int j = fromFloor+1; j < bc.ebListOUT.size(); j++) {
-            if (elevator.stopfloorsOUT[j]) {
-                elevatorExists = true;
-                break;
-            }
+        if (elevator.currentfloor <= fromFloor && elevator.currentfloor > elevatorQueue.peek().currentfloor) {
+              elevatorExists = true;
         }
+
         if (elevatorExists) {
             return elevator;
         } else {
             elevatorQueue.add(elevator);
-            spaceAvailableElevatorsUp(elevatorQueue.poll(), elevatorQueue, fromFloor);
+            spaceAvailableElevatorsDown(elevatorQueue.poll(), elevatorQueue, fromFloor);
         }
        return null;
     }
@@ -54,17 +50,14 @@ public class ElevatorControl {
     private Elevator spaceAvailableElevatorsDown(Elevator elevator, Queue<Elevator> elevatorQueue, int fromFloor) {
         boolean elevatorExists = false;
 
-        for (int j = 0; j < fromFloor; j++) {
-            if (elevator.stopfloorsOUT[j]) {
-                elevatorExists = true;
-                break;
-            }
+        if (elevator.currentfloor >= fromFloor && elevator.currentfloor < elevatorQueue.peek().currentfloor) {
+            elevatorExists = true;
         }
         if (elevatorExists) {
             return elevator;
         } else {
             elevatorQueue.add(elevator);
-            spaceAvailableElevatorsDown(elevatorQueue.poll(), elevatorQueue, fromFloor);
+            spaceAvailableElevatorsUp(elevatorQueue.poll(), elevatorQueue, fromFloor);
         }
         return null;
 

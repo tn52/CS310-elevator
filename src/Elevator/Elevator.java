@@ -64,7 +64,7 @@ public class Elevator extends AbstractElevator implements Runnable{
     		goingUp = directionUp && !directionDown;
         	goingDown = !directionUp && directionDown;
         	idle = !directionUp && !directionDown;
-    		if(stopfloorsUP[currentfloor] && (goingUp || idle)) {
+    		if(stopfloorsUP[currentfloor] && (goingUp || idle)) { //something is happening here
     			OpenDoors();
 				ClosedDoors();
 				directionUp = true;
@@ -121,6 +121,7 @@ public class Elevator extends AbstractElevator implements Runnable{
     	System.out.println("Elevator"+this.elevatorId+" on Floor"+currentfloor+" opens");
     	bc.ebListUP.get(currentfloor).raise();
     	bc.ebListOUT.get(currentfloor).raise();
+//        bc.ebListDOWN.get(currentfloor).raise();
     	    	
     }
 
