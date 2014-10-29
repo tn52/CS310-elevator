@@ -86,7 +86,7 @@ public class Parser {
 		}
 		
 		testParser();
-		
+
 		for(int i = 0; i < numElevators; i++){
 			Elevator elevator = new Elevator(numFloors, i+1, maxCapacity, bc);
             mElevatorQueue.add(elevator);
