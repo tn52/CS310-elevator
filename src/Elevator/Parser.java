@@ -84,11 +84,7 @@ public class Parser {
 			
 			Rider r = new Rider(bc, riderID, startFloor, destFloor);
 			riderList.add(r);
-			//Thread t = new Thread(r);
-			//t.start();
 		}
-		
-//		testParser();
 
 		for(int i = 0; i < numElevators; i++){
 			Elevator elevator = new Elevator(numFloors, i+1, maxCapacity, bc);
@@ -102,11 +98,6 @@ public class Parser {
 			Thread t = new Thread(r);
 			t.start();
 		}
-
-//        for (Elevator e : mElevatorQueue) {
-//            Thread t = new Thread(e);
-//            t.start();
-//        }
 
         for (Elevator e: mElevatorList) {
             Thread t = new Thread(e);
@@ -130,9 +121,13 @@ public class Parser {
 
     public void testParser(){
         System.out.println("Number of Floors: " + numFloors);
+//        TestElevator.logger.info("Number of Floors: " + numFloors);
         System.out.println("Number of Elevators: " + numElevators);
+//        TestElevator.logger.info("Number of Elevators: " + numElevators);
         System.out.println("Number of Riders: " + numRiders);
+//        TestElevator.logger.info("Number of Riders: " + numRiders);
         System.out.println("Max Capacity per Elevator: " + maxCapacity);
+//        TestElevator.logger.info("Max Capacity per Elevator: " + maxCapacity);
         for(Rider r : riderList){
             System.out.println("Rider " + r.riderID + ": " + "Starts from floor " + r.startFloor + " And ends at floor " + r.destFloor);
         }

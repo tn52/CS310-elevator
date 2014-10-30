@@ -1,15 +1,23 @@
 package Elevator;
 
-import java.io.FileNotFoundException;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 public class TestElevator {
 
-	public static void main(String[] args) throws FileNotFoundException {
-		
+    public static Logger logger;
+
+	public static void main(String[] args) throws Exception {
+
+        boolean append = true;
+        FileHandler handler = new FileHandler("Elevator.log", append);
+        logger = Logger.getLogger("cs310.fall14.elevator");
+        logger.addHandler(handler);
 		/* Run elevator */
 		Parser parser = new Parser();
-		parser.parse("InputTest1.txt");
-		
-	}
+		parser.parse("ElevatorInputFile.txt");
+
+
+    }
 
 }

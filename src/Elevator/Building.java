@@ -39,7 +39,8 @@ public class Building extends AbstractBuilding {
     /** Called by Rider Threads, returns the elevator that can efficiently serve rider. */
 	@Override
 	public synchronized AbstractElevator CallUp(int fromFloor, int riderID, ElevatorBarrier eb) {
-		System.out.println("Rider"+riderID+" pushes UP "+fromFloor);
+		System.out.println("Rider "+riderID+" pushes UP from "+fromFloor);
+//        TestElevator.logger.info("Rider "+riderID+" pushes UP from "+fromFloor);
 
 		Elevator tempElevator = Parser.ec.returnBestElevator(fromFloor, true);
 		tempElevator.stopfloorsUP[fromFloor] = true;
@@ -48,7 +49,8 @@ public class Building extends AbstractBuilding {
 
 	@Override
 	public synchronized AbstractElevator CallDown(int fromFloor, int riderID, ElevatorBarrier eb) {
-		System.out.println("Rider"+riderID+" pushes DOWN "+fromFloor);
+		System.out.println("Rider "+riderID+" pushes DOWN from "+fromFloor);
+//        TestElevator.logger.info("Rider "+riderID+" pushes DOWN from "+fromFloor);
 
 		Elevator tempElevator = Parser.ec.returnBestElevator(fromFloor, false);
 		tempElevator.stopfloorsDOWN[fromFloor] = true;
