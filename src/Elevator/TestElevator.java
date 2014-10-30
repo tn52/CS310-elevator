@@ -11,6 +11,7 @@ public class TestElevator {
 
         boolean append = true;
         FileHandler handler = new FileHandler("Elevator.log", append);
+        handler.setFormatter(new OutputFormatter());
         logger = Logger.getLogger("cs310.fall14.elevator");
         logger.addHandler(handler);
 		/* Run elevator */

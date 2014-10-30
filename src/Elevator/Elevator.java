@@ -140,20 +140,20 @@ public class Elevator extends AbstractElevator implements Runnable{
     @Override
     public void OpenDoors() {
     	System.out.println("Elevator "+this.elevatorId+" on Floor "+currentfloor+" opens");
-//        TestElevator.logger.info("Elevator "+this.elevatorId+" on Floor "+currentfloor+" opens");
+        TestElevator.logger.info("Elevator "+this.elevatorId+" on Floor "+currentfloor+" opens");
     }
 
     @Override
     public void ClosedDoors() {
     	System.out.println("Elevator "+this.elevatorId+" on Floor "+currentfloor+" closes");
-//        TestElevator.logger.info("Elevator "+this.elevatorId+" on Floor "+currentfloor+" closes");
+        TestElevator.logger.info("Elevator "+this.elevatorId+" on Floor "+currentfloor+" closes");
     }
 
     @Override
     public synchronized void VisitFloor(int floor) {
         currentfloor = floor;
         System.out.println("Elevator "+this.elevatorId+" moves to Floor "+floor);
-//        TestElevator.logger.info("Elevator "+this.elevatorId+" moves to Floor "+floor);
+        TestElevator.logger.info("Elevator "+this.elevatorId+" moves to Floor "+floor);
     }
 
     @Override
@@ -161,11 +161,11 @@ public class Elevator extends AbstractElevator implements Runnable{
         if (peopleinElevator.size() < maxOccupancy) {
             peopleinElevator.add(rider);
             System.out.println("Rider "+rider.riderID+" enters Elevator "+elevatorID+" on Floor "+floor);
-//            TestElevator.logger.info("Rider "+rider.riderID+" enters Elevator "+elevatorID+" on Floor "+floor);
+            TestElevator.logger.info("Rider "+rider.riderID+" enters Elevator "+elevatorID+" on Floor "+floor);
             return true;
         } else {
             System.out.println("Rider " + rider.riderID + " cannot enter Elevator " + elevatorID + " on Floor " + floor + " because it is full");
-//            TestElevator.logger.info("Rider " + rider.riderID + " cannot enter Elevator " + elevatorID + " on Floor " + floor + " because it is full");
+            TestElevator.logger.info("Rider " + rider.riderID + " cannot enter Elevator " + elevatorID + " on Floor " + floor + " because it is full");
             return false;
         }
     }
@@ -174,13 +174,13 @@ public class Elevator extends AbstractElevator implements Runnable{
     public synchronized void Exit(Rider rider, int elevatorID, int floor) {
         peopleinElevator.remove(rider);
         System.out.println("Rider "+rider.riderID+" exits Elevator "+elevatorID+" on Floor "+floor);
-//        TestElevator.logger.info("Rider "+rider.riderID+" exits Elevator "+elevatorID+" on Floor "+floor);
+        TestElevator.logger.info("Rider "+rider.riderID+" exits Elevator "+elevatorID+" on Floor "+floor);
     }
 
     @Override
     public synchronized void RequestFloor(int floor, int riderId, boolean goUp) {
     	stopfloorsOUT[floor] = true;
     	System.out.println("Rider "+riderId+" pushes Elevator "+this.elevatorId+" Button "+floor);
-//        TestElevator.logger.info("Rider "+riderId+" pushes Elevator "+this.elevatorId+" Button "+floor);
+        TestElevator.logger.info("Rider "+riderId+" pushes Elevator "+this.elevatorId+" Button "+floor);
     }
 }
