@@ -173,8 +173,8 @@ public class Elevator extends AbstractElevator implements Runnable{
     @Override
     public synchronized void Exit(Rider rider, int elevatorID, int floor) {
         peopleinElevator.remove(rider);
-        System.out.println("Rider "+rider.riderID+" exits Elevator"+elevatorID+" on Floor "+floor);
-//        TestElevator.logger.info("Rider "+rider.riderID+" exits Elevator"+elevatorID+" on Floor "+floor);
+        System.out.println("Rider "+rider.riderID+" exits Elevator "+elevatorID+" on Floor "+floor);
+//        TestElevator.logger.info("Rider "+rider.riderID+" exits Elevator "+elevatorID+" on Floor "+floor);
     }
 
     @Override
